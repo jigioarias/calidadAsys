@@ -1,0 +1,20 @@
+<div class="form-container">
+  <h1>Crear cliente</h1>
+  <form [formGroup]="clientForm">
+    <mat-form-field>
+      <input formControlName="documento" matInput placeholder="Documento" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select formControlName="tipoDocumento" matInput placeholder="Tipo documento">
+        <ng-container *ngFor="let tipoDocumento of tiposDocumento">
+          <mat-option value="{{ tipoDocumento }}">{{ tipoDocumento.label }}</mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="fechaNacimiento" [matDatepicker]="myDatepicker" placeholder="Fecha de nacimiento" />
+      <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+      <mat-datepicker #myDatepicker></mat-datepicker>
+    </mat-form-field>
+  </form>
+</div>
