@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import {
+  MatButtonModule,
   MatDatepickerModule,
   MatFormFieldModule,
   MatInputModule,
@@ -22,7 +23,8 @@ import {
     MatInputModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatButtonModule
   ],
   exports: [
     MatSidenavModule,
@@ -32,7 +34,8 @@ import {
     MatInputModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatButtonModule
   ]
 })
 export class MaterialModule {}

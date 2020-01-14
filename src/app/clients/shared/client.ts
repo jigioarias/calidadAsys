@@ -1,10 +1,10 @@
-import { TipoDocumento } from './tipo-documento';
-
+import { DocumentType } from '../shared/document-type';
 export interface Client {
-  id: string;
-  documento: string;
-  tipoDocumento: TipoDocumento;
-  nombreCompleto: string;
+  uuid: string;
+  documentType: DocumentType;
+  document: string;
+  name: string;
   email: string;
-  fechaNacimiento: Date;
+  bithdate: Date;
+  phone: string;
 }
