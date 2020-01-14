@@ -2,17 +2,17 @@
   <h1>Crear cliente</h1>
   <form [formGroup]="clientForm">
     <mat-form-field>
-      <input formControlName="document" matInput placeholder="Documento" />
+      <input formControlName="document" matInput placeholder="Documento" required />
     </mat-form-field>
     <mat-form-field>
-      <mat-select formControlName="documentType" matInput placeholder="Tipo documento">
+      <mat-select formControlName="documentType" matInput placeholder="Tipo documento" required>
         <ng-container *ngFor="let documentType of documentTypes">
           <mat-option value="{{ documentType }}">{{ documentType.label }}</mat-option>
         </ng-container>
       </mat-select>
     </mat-form-field>
     <mat-form-field>
-      <input formControlName="name" matInput placeholder="Nombre completo" />
+      <input formControlName="name" matInput placeholder="Nombre completo" required />
     </mat-form-field>
     <mat-form-field>
       <input matInput formControlName="bithdate" [matDatepicker]="myDatepicker" placeholder="Fecha de nacimiento" />

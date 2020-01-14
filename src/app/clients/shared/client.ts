@@ -4,7 +4,7 @@ export interface Client {
   documentType: DocumentType;
   document: string;
   name: string;
-  email: string;
-  bithdate: Date;
-  phone: string;
+  email?: string;
+  bithdate?: Date;
+  phone?: string;
 }
