@@ -1,0 +1,31 @@
+<!-- <mat-toolbar class="example-header">Header</mat-toolbar>
+
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #sidenav mode="side" opened class="example-sidenav">
+    Aqui Menú
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    Aqui contenido
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<mat-toolbar class="example-footer">Footer</mat-toolbar> -->
+
+<div>
+  <mat-toolbar>Hotelyando</mat-toolbar>
+
+  <mat-sidenav-container class="app-container">
+    <mat-sidenav #sidenav mode="side" opened="true">
+      <!-- <hs-menu></hs-menu> -->
+      <ho-menu></ho-menu>
+      <!-- Aqui Menú -->
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <!-- <hs-container></hs-container> -->
+      <!-- Aqui contenido -->
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
