@@ -1,0 +1,21 @@
+.login-container {
+  display: flex;
+  width: 40%;
+  border: 1px solid #7b7988;
+  border-radius: 10px;
+  margin: 10% auto;
+
+  img {
+    width: 80%;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  div {
+    display: flex;
+  }
+}

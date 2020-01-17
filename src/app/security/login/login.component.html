@@ -1,0 +1,16 @@
+<div class="login-container">
+  <div>
+    <img src='assets/login.png'>
+  </div>
+  <div>
+    <form [formGroup]="loginForm">
+      <mat-form-field>
+        <input formControlName="user" matInput placeholder="Usuario" required />
+      </mat-form-field>
+      <mat-form-field>
+        <input formControlName="password" type="password" matInput placeholder="Password" required />
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="login()">Ingresar</button>
+    </form>
+  </div>
+</div>
