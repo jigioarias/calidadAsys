@@ -1,15 +1,27 @@
 <div class="login-container">
   <div>
-    <img src='assets/login.png'>
+    <img src="assets/login.png" />
   </div>
   <div>
     <form [formGroup]="loginForm">
+      <div>
+        <span>{{ error }}</span>
+      </div>
       <mat-form-field>
         <input formControlName="user" matInput placeholder="Usuario" required />
       </mat-form-field>
       <mat-form-field>
         <input formControlName="password" type="password" matInput placeholder="Password" required />
       </mat-form-field>
+      <ng-container *ngIf="hotels?.length">
+        <mat-form-field>
+          <mat-select matInput placeholder="Seleccione hotel" required>
+            <ng-container *ngFor="let hotel of hotels">
+              <mat-option value="{{ hotel }}">{{ hotel.name }}</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
       <button mat-raised-button color="primary" (click)="login()">Ingresar</button>
     </form>
   </div>

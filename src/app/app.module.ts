@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ClientsModule } from './clients/clients.module';
 import { GeneralModule } from './general/general.module';
@@ -10,7 +11,16 @@ import { SecurityModule } from './security/security.module';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, GeneralModule, BrowserAnimationsModule, RoomsModule, ClientsModule, SecurityModule, MaterialModule],
+  imports: [
+    BrowserModule,
+    GeneralModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    RoomsModule,
+    ClientsModule,
+    SecurityModule,
+    MaterialModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
