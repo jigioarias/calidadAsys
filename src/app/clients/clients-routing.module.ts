@@ -6,7 +6,7 @@ import { ClientsComponent } from './clients/clients.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'client',
     component: ClientsComponent,
     children: [
       {
@@ -14,7 +14,7 @@ const routes: Routes = [
         component: ClientsListComponent
       },
       {
-        path: 'client/:id',
+        path: ':id',
         component: ClientComponent
       },
       { path: '', redirectTo: 'list', pathMatch: 'full' }

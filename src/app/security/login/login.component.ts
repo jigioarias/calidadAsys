@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
   login() {
     const user = this.loginForm.get('user').value;
     const pass = this.loginForm.get('password').value;
+    this.authenticationService.login(user, pass);
     this.authenticationService.login2(user, pass).subscribe(userCredential => {
       console.log('puede acceder', userCredential);
       if (userCredential.hotel) {

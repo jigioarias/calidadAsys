@@ -53,20 +53,5 @@ export class AuthenticationService {
         hotel: null
       } as UserCredential);
     }
-
-    // const url = environment.apiUrl;
-    // this.http
-    //   .post<Respuesta<UserCredential>>(`${url}login`, {
-    //     usuario: email,
-    //     contrasena: pass
-    //   })
-    //   .subscribe(
-    //     r => {
-    //       console.log('respuesta', r);
-    //     },
-    //     err => {
-    //       console.log('error', err);
-    //     }
-    //   );
   }
 }

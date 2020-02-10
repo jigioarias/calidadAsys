@@ -1,16 +1,29 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RoomComponent } from './room/room.component';
+import { RoomsListComponent } from './rooms-list/rooms-list.component';
+import { RoomsComponent } from './rooms/rooms.component';
 
-const routesRooms: Routes = [
+const routes: Routes = [
   {
-    path: 'room',
-    component: RoomComponent
+    path: 'rooms',
+    component: RoomsComponent,
+    children: [
+      {
+        path: 'list',
+        component: RoomsListComponent
+      },
+      {
+        path: ':id',
+        component: RoomComponent
+      },
+      { path: '', redirectTo: 'list', pathMatch: 'full' }
+    ]
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routesRooms)],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
 export class RoomsRoutingModule {}
