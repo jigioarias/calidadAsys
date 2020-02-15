@@ -1,6 +1,9 @@
-<h3>Información de clientes!</h3>
-<div>
-  <a [routerLink]="[1]">Crear cliente</a>
-  <a routerLink="list">Lista cliente</a>
+<div class="menu-resource">
+  <div>
+    <a routerLink="list">Lista de clientes</a>
+    <a [routerLink]="[1]">Crear cliente</a>
+  </div>
+  <span>Gestión de clientes</span>
 </div>
+
 <router-outlet></router-outlet>
