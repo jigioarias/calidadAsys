@@ -1,31 +1,47 @@
-<div class="form-container">
-  <h1>Crear cliente</h1>
-  <form [formGroup]="clientForm">
-    <mat-form-field>
-      <input formControlName="document" matInput placeholder="Documento" required />
-    </mat-form-field>
-    <mat-form-field>
-      <mat-select formControlName="documentType" matInput placeholder="Tipo documento" required>
-        <ng-container *ngFor="let documentType of documentTypes">
-          <mat-option value="{{ documentType }}">{{ documentType.label }}</mat-option>
-        </ng-container>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-      <input formControlName="name" matInput placeholder="Nombre completo" required />
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput formControlName="bithdate" [matDatepicker]="myDatepicker" placeholder="Fecha de nacimiento" />
-      <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
-      <mat-datepicker #myDatepicker></mat-datepicker>
-    </mat-form-field>
-    <mat-form-field>
-      <input formControlName="email" matInput placeholder="Correo electrónico" />
-    </mat-form-field>
-    <mat-form-field>
-      <input formControlName="phone" matInput placeholder="Teléfono/Celular" />
-    </mat-form-field>
+<mat-card class="create-client-card">
+  <mat-card-header>
+    <mat-card-title>Crear cliente</mat-card-title>
+  </mat-card-header>
+  <div class="form-container">
+    <mat-card-content>
+      <form [formGroup]="clientForm">
+        <mat-form-field>
+          <input formControlName="document" matInput placeholder="Documento" required />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="documentType" matInput placeholder="Tipo documento" required>
+            <ng-container *ngFor="let documentType of documentTypes">
+              <mat-option value="{{ documentType }}">{{ documentType.description }}</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="name" matInput placeholder="Nombre completo" required />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="bithdate" [matDatepicker]="myDatepicker" placeholder="Fecha de nacimiento" />
+          <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+          <mat-datepicker #myDatepicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="email" matInput placeholder="Correo electrónico" />
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="phone" matInput placeholder="Teléfono/Celular" />
+        </mat-form-field>
 
-    <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
-  </form>
-</div>
+        <mat-form-field>
+          <input formControlName="country" matInput placeholder="País" [matAutocomplete]="auto" />
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let countryOption of filteredCountries" [value]="countryOption">
+              {{ countryOption.name }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
+    </mat-card-actions>
+  </div>
+</mat-card>

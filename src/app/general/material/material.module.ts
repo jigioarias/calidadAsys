@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import {
+  MatAutocompleteModule,
   MatButtonModule,
+  MatCardModule,
   MatDatepickerModule,
   MatFormFieldModule,
   MatInputModule,
@@ -24,7 +26,9 @@ import {
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCardModule,
+    MatAutocompleteModule
   ],
   exports: [
     MatSidenavModule,
@@ -35,7 +39,9 @@ import {
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCardModule,
+    MatAutocompleteModule
   ]
 })
 export class MaterialModule {}

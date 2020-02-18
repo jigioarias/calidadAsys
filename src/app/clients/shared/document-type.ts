@@ -1,16 +1,16 @@
 export interface DocumentType {
   code: string;
-  label: string;
+  description: string;
 }
 
 export const CC: DocumentType = {
   code: 'CC',
-  label: 'Cédula de ciudadanía'
+  description: 'Cédula de ciudadanía'
 };
 
 export const NIT: DocumentType = {
   code: 'NIT',
-  label: 'NIT'
+  description: 'NIT'
 };
 
 export const DOCUMENT_TYPES: DocumentType[] = [CC, NIT];
