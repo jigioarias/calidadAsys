@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { ClientsModule } from './clients/clients.module';
 import { HomeComponent } from './general/home/home.component';
 import { RoomsModule } from './inventory/rooms/rooms.module';
+import { UsersModule } from './users/users.module';
+
 
 const routes: Routes = [
   {
@@ -17,6 +19,12 @@ const routes: Routes = [
         path: '',
         loadChildren: () => RoomsModule
       }
+      ,
+      {
+        path: '',
+        loadChildren: () => UsersModule
+      }
+
     ]
   },
   { path: '**', redirectTo: 'login' }
@@ -26,4 +34,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { UserCredential } from './user-credential';
 
@@ -8,50 +9,30 @@ import { UserCredential } from './user-credential';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  login(user: any, pass: any) {
-    console.log('login con', user, pass);
+  login(user: string, pass: string): Observable<boolean> {
     const url = environment.apiUrl;
-    this.http
+    console.log(url);
+    return this.http
       .post<any>(`${url}login`, {
-        usuario: 'admin',
-        contrasena: 'admin'
+        user: user,
+        password: pass
       })
-      .subscribe(
-        r => {
-          console.log('respuesta', r);
-        },
-        err => {
-          console.log('error', err);
-        }
+      .pipe(
+        switchMap(response => {
+
+          if (response.message && response.message === 'User existente') {
+            this.setUserCredential(response.content);
+            return of(true);
+          }
+          return of(false);
+        })
       );
   }
 
-  login2(email: string, pass: string): Observable<UserCredential> {
-    if (email === 'user') {
-      return of({
-        user: email,
-        token: 'token',
-        hotel: [
-          {
-            uuid: 'uuidHotel',
-            name: 'PrimerHotel',
-            email: 'hotel@aa.com'
-          },
-          {
-            uuid: 'uuidHotel',
-            name: 'SegundoHotel',
-            email: 'hotel@aa.com'
-          }
-        ]
-      } as UserCredential);
-    } else {
-      return of({
-        user: email,
-        token: 'token',
-        hotel: null
-      } as UserCredential);
-    }
+  setUserCredential(userCredential: UserCredential) {
+    localStorage.setItem('userLogged', userCredential.user);
+    localStorage.setItem('token', userCredential.token);
   }
 }
