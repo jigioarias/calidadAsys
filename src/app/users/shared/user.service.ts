@@ -20,9 +20,7 @@ export class UserService {
     let options = {
       headers: headers
     };
-    console.log(usuario);
     const url = environment.apiUrl;
-    console.log(url);
     this.http.post<any>(`${url}user`, usuario, options).subscribe(
       data => console.log('success', data),
       error => console.log('oops', error)
@@ -44,6 +42,7 @@ export class UserService {
     return this.http.get<ResponseList<User>>(`${url}user`, options).pipe(
       switchMap(
         data => of(data.content)
+
       ), catchError(
         e => {
           console.log(e);

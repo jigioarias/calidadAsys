@@ -2,6 +2,8 @@
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 // @import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
 
+$color-header-avatar: #3147bf;
+
 html,
 body {
   height: 100%;
@@ -15,3 +17,54 @@ body {
   background-color: #3147bf;
   color: #fff;
 }
+
+.mat-card {
+  margin: 1rem;
+}
+
+.form-container {
+  text-align: center;
+  mat-form-field {
+    display: block;
+  }
+  mat-card-actions {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+// .header {
+//   &.create {
+//     // width: 1.5rem;
+//     // background-image: url('assets/icons/add.svg');
+//     // background-size: 1.5rem;
+
+//     // background: url('assets/icons/add.svg') no-repeat center;
+//     // background-size: 1.5rem;
+//     background-color: $color-header-avatar;
+
+//     mask: url('assets/icons/add.svg');
+//     mask-repeat: no-repeat;
+//     mask-size: 80%;
+
+//     // filter: brightness(50);
+//     // background-image: url('assets/icons/add.svg');
+//     // background-position: center;
+//     // background-repeat: no-repeat;
+//     /* margin-top: -10px; */
+//     /* top: 0px; */
+//     /* left: 0px; */
+//     height: auto;
+//     position: relative;
+//     top: -6px;
+//   }
+
+//   path {
+//     fill: green;
+//   }
+// }
+
+// .example-header-image {
+//   background-image: url('/src/assets/icons/add.svg');
+//   background-size: cover;
+// }

@@ -26,19 +26,13 @@ export class LoginComponent implements OnInit {
   login() {
     const user = this.loginForm.get('user').value;
     const pass = this.loginForm.get('password').value;
-    this.authenticationService.login(user, pass);
-    this.authenticationService.login2(user, pass).subscribe(userCredential => {
-      console.log('puede acceder', userCredential);
-      if (userCredential.hotel) {
-        if (userCredential.hotel && userCredential.hotel.length) {
-          if (userCredential.hotel.length > 1) {
-            this.hotels = userCredential.hotel;
-            return;
-          }
-        }
-        this.router.navigateByUrl('/home');
+
+    this.authenticationService.login(user, pass).subscribe(successLoggin => {
+      if (successLoggin) {
+        console.log('token tomado del localstorage', localStorage.getItem('token'));
+        this.router.navigate(['/app']);
       } else {
-        this.error = 'El usuario no esta asignado a ningún hotel.';
+        this.error = 'Fallo el login';
       }
     });
   }

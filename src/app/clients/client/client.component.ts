@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Client } from '../shared/client';
+import { Country } from '../shared/country';
 import { DocumentType, DOCUMENT_TYPES } from '../shared/document-type';
 
 @Component({
@@ -11,6 +12,11 @@ import { DocumentType, DOCUMENT_TYPES } from '../shared/document-type';
 export class ClientComponent implements OnInit {
   clientForm: FormGroup;
   documentTypes: DocumentType[];
+  countries: Country[] = [
+    { code: 'CO', name: 'Colombia' },
+    { code: 'US', name: 'Estados Unidos' }
+  ];
+  filteredCountries: Country[];
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit() {
@@ -21,9 +27,19 @@ export class ClientComponent implements OnInit {
       name: [null, Validators.required],
       email: [null, Validators.required, Validators.email],
       bithdate: [null, Validators.required],
-      phone: [null, Validators.required]
+      phone: [null, Validators.required],
+      country: [null, Validators.required]
     });
     this.documentTypes = DOCUMENT_TYPES;
+
+    this.filteredCountries = this.countries;
+    this.filterCountries();
+  }
+
+  private filterCountries() {
+    this.clientForm.get('country').valueChanges.subscribe(countryVal => {
+      this.filteredCountries = this.countries.filter(option => option.name.toLowerCase().includes(countryVal.toLowerCase()));
+    });
   }
 
   guardar() {

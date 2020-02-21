@@ -1,3 +1,17 @@
-a {
-  margin-right: 10px;
+.menu-resource {
+  background-color: #283a9c;
+  display: flex;
+  justify-content: space-between;
+  line-height: 2rem;
+
+  a {
+    color: white;
+    padding: 0 1rem;
+    border-right: 2px solid #6f7284;
+  }
+
+  span {
+    color: #d0d6f3;
+    margin-right: 1rem;
+  }
 }
