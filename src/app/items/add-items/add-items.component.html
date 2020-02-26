@@ -1,0 +1,27 @@
+<form [formGroup]="addFormItem">
+  <div class="items-container">
+    <mat-form-field>
+      <input matInput placeholder="descripcion" formControlName="description" name="description" id="description" required />
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="number" formControlName="quantity" placeholder="cantidad" name="quantity" id="quantity" required />
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="number" formControlName="price" placeholder="precio" name="price" id="price" required />
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="number" formControlName="stock" placeholder="stock" name="stock" id="stock" required />
+    </mat-form-field>
+
+    <mat-label>Estado:</mat-label>
+    <mat-radio-group name="active" id="active" formControlName="active">
+      <mat-radio-button value="true">Activo</mat-radio-button>
+      <mat-radio-button value="false">Inactivo</mat-radio-button>
+    </mat-radio-group>
+
+    <button mat-button (click)="onSubmit()">Ingresar</button>
+  </div>
+</form>

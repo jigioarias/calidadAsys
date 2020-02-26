@@ -1,22 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Estado } from '../shared/estado';
 import { Rol } from '../shared/rol';
 import { RolService } from '../shared/rol.service';
 import { User } from '../shared/user';
 import { UserService } from '../shared/user.service';
 
-
-
 @Component({
   selector: 'app-add-user',
   templateUrl: './add-user.component.html',
   styleUrls: ['./add-user.component.scss']
 })
-
-
 export class AddUserComponent implements OnInit {
-
   rol: string;
   estado: string;
   usuario: User;
@@ -24,17 +19,12 @@ export class AddUserComponent implements OnInit {
 
   estados: Estado[] = [
     { valor: '1', nombre: 'Activo' },
-    { valor: '0', nombre: 'Inactivo' },
-
+    { valor: '0', nombre: 'Inactivo' }
   ];
 
   roles: Rol[];
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService, private rolService: RolService) {
-
-  }
-
-
+  constructor(private formBuilder: FormBuilder, private userService: UserService, private rolService: RolService) {}
 
   ngOnInit() {
     this.addForm = this.formBuilder.group({
@@ -42,17 +32,11 @@ export class AddUserComponent implements OnInit {
       clave: [null, Validators.required],
       rol: [null, Validators.required],
       estado: [null, Validators.required]
-
     });
 
-    this.rolService.list().subscribe(
-      data => {
-        console.log('rolesss:::>>>>>', data)
-        this.roles = data
-      }
-    );
-
-
+    this.rolService.list().subscribe(data => {
+      this.roles = data;
+    });
   }
 
   onSubmit() {
@@ -65,12 +49,8 @@ export class AddUserComponent implements OnInit {
       hotelId: '',
       personId: '0',
       uuid: '1'
-
     };
-    console.log(cf)
+    console.log(cf);
     this.userService.add(cf);
-
-
   }
-
 }
