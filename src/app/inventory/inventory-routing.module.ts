@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RoomComponent } from './room/room.component';
-import { RoomsListComponent } from './rooms-list/rooms-list.component';
-import { RoomsComponent } from './rooms/rooms.component';
+import { RoomComponent } from './rooms/room/room.component';
+import { RoomsListComponent } from './rooms/rooms-list/rooms-list.component';
+import { RoomsComponent } from './rooms/rooms/rooms.component';
 
 const routes: Routes = [
   {
@@ -26,4 +26,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class RoomsRoutingModule {}
+export class InventoryRoutingModule {}
