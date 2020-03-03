@@ -1,6 +1,9 @@
-<h3>Información de clientes!</h3>
-<div>
-  <a [routerLink]="[1]">Crear habitacion</a>
-  <a routerLink="list">Lista habitaciones</a>
+<div class="menu-resource">
+  <div>
+    <a routerLink="list">Lista de habitaciones</a>
+    <a [routerLink]="[1]">Crear habitación</a>
+  </div>
+  <span>Gestión de habitaciones</span>
 </div>
+
 <router-outlet></router-outlet>
