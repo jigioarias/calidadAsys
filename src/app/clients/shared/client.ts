@@ -1,4 +1,5 @@
 import { DocumentType } from '../shared/document-type';
+import { Country } from './country';
 export interface Client {
   uuid: string;
   documentType: DocumentType;
@@ -7,4 +8,5 @@ export interface Client {
   email?: string;
   bithdate?: Date;
   phone?: string;
+  country: Country;
 }

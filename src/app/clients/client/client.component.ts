@@ -50,7 +50,8 @@ export class ClientComponent implements OnInit {
       name: this.clientForm.get('name').value,
       email: this.clientForm.get('email').value,
       bithdate: this.clientForm.get('bithdate').value,
-      phone: this.clientForm.get('phone').value
+      phone: this.clientForm.get('phone').value,
+      country: null
     };
     console.log('guardar cliente', cf);
   }
