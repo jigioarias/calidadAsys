@@ -9,7 +9,7 @@ import { UserCredential } from './user-credential';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   login(user: string, pass: string): Observable<boolean> {
     const url = environment.apiUrl;
@@ -21,8 +21,7 @@ export class AuthenticationService {
       })
       .pipe(
         switchMap(response => {
-
-          if (response.message && response.message === 'User existente') {
+          if (response.message && response.message === 'Usuario encontrado.') {
             this.setUserCredential(response.content);
             return of(true);
           }

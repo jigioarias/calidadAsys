@@ -20,6 +20,13 @@ body {
 
 .mat-card {
   margin: 1rem;
+  .mat-card-header-text {
+    margin: 0 !important;
+  }
+  mat-card-title {
+    font-size: 18px !important;
+    margin-bottom: 0 !important;
+  }
 }
 
 .form-container {
