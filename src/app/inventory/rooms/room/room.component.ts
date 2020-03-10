@@ -9,6 +9,7 @@ import { RoomState } from '../../shared/room';
 })
 export class RoomComponent implements OnInit {
   roomForm: FormGroup;
+  itemInRoomForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder) {}
 
@@ -17,7 +18,7 @@ export class RoomComponent implements OnInit {
       uuid: [null],
       id: [null, Validators.required],
       description: [null],
-      floor: [null],
+      floor: [1],
       area: [null],
       maxPersons: [2, Validators.required],
       noBeds: [1, Validators.required],
@@ -26,6 +27,12 @@ export class RoomComponent implements OnInit {
       items: [null],
       comforts: [null],
       state: [RoomState.DISPONIBLE]
+    });
+
+    this.itemInRoomForm = this.formBuilder.group({
+      item: [null, Validators.required],
+      quantity: [1, Validators.required],
+      requireCheck: [true, Validators.required]
     });
   }
 

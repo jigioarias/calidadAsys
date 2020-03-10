@@ -1,8 +1,10 @@
+import { Comfort } from './comforts';
+
 export interface Room {
   uuid: string;
   id: string; // identificación de la habitación puede ser un numero (101) o combinación número letra (A-01)
   description?: string; // descripción general de la habitación
-  floor?: number; // piso en el que se encuentra la habitación
+  floor: number; // piso en el que se encuentra la habitación
   area?: number; // tamaño de la habitación dada en metros cuadrados
   maxPersons: number; // número máximo de personas que pueden hospedarse en la habitación
   noBeds: number; // número camas en la habitación
@@ -35,12 +37,6 @@ export interface ItemInRoom {
   description: string;
   quantity: string;
   requireCheck: boolean;
-}
-
-export interface Comfort {
-  code: string;
-  description: string;
-  icon?: string;
 }
 
 export enum RoomState {

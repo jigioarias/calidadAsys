@@ -1,15 +1,55 @@
 <mat-card class="create-client-card">
-  <mat-card-header>
-    <mat-card-title>Crear habitación</mat-card-title>
-  </mat-card-header>
   <div class="form-container">
     <mat-card-content>
       <form [formGroup]="roomForm">
-        <div class="d-flex">
-          <mat-form-field>
-            <input formControlName="id" matInput placeholder="Documento" required />
-          </mat-form-field>
-        </div>
+        <h2>Información básica de la organización</h2>
+        <mat-card>
+          <div class="d-flex">
+            <mat-form-field id="id">
+              <input formControlName="id" matInput placeholder="Identificación." required />
+            </mat-form-field>
+            <mat-form-field id="floor">
+              <input formControlName="floor" matInput placeholder="Piso" required />
+            </mat-form-field>
+            <mat-form-field id="maxPersons">
+              <input formControlName="maxPersons" matInput placeholder="No. personas" required />
+            </mat-form-field>
+            <mat-form-field id="noBeds">
+              <input formControlName="noBeds" matInput placeholder="No. camas" required />
+            </mat-form-field>
+            <mat-form-field id="area">
+              <input formControlName="area" matInput placeholder="Area" />
+              <span matSuffix>m<sup>2</sup></span>
+            </mat-form-field>
+            <div id="freeParking">
+              <mat-slide-toggle formControlName="freeParking">Parqueadero gratis</mat-slide-toggle>
+            </div>
+          </div>
+          <hr />
+          <div>
+            <h3>Comodidades de la habitación</h3>
+            <ho-room-comforts></ho-room-comforts>
+          </div>
+        </mat-card>
+      </form>
+      <form [formGroup]="itemInRoomForm">
+        <h2>Items o productos disponibles de la habitación</h2>
+        <mat-card>
+          <div class="d-flex">
+            <div>
+              <mat-form-field id="id">
+                <input formControlName="item" matInput placeholder="Item" required />
+              </mat-form-field>
+              <mat-form-field id="quantity">
+                <input formControlName="quantity" matInput placeholder="Cantidad" required />
+              </mat-form-field>
+              <div id="requireCheck">
+                <mat-slide-toggle formControlName="requireCheck">Requiere revisión</mat-slide-toggle>
+              </div>
+            </div>
+            <div><p>Aqui tabla</p></div>
+          </div>
+        </mat-card>
       </form>
     </mat-card-content>
     <mat-card-actions>

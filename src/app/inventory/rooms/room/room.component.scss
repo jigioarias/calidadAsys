@@ -1,0 +1,43 @@
+@import '~bootstrap/scss/bootstrap.scss';
+
+#id {
+  width: 7rem;
+}
+
+#floor {
+  width: 3rem;
+}
+
+#maxPersons {
+  width: 6rem;
+}
+
+#noBeds {
+  width: 5rem;
+}
+
+#area {
+  width: 5rem;
+}
+
+#freeParking {
+  margin: 1rem;
+}
+
+mat-form-field {
+  @extend .mr-4;
+}
+
+h2 {
+  font-size: 1rem;
+  color: gray;
+}
+
+h3 {
+  font-size: 0.8rem;
+  color: gray;
+}
+
+mat-card {
+  margin: 0.625rem;
+}

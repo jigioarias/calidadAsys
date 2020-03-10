@@ -30,11 +30,11 @@ body {
 }
 
 .form-container {
-  text-align: center;
   mat-form-field {
     display: block;
   }
   mat-card-actions {
+    text-align: center;
     padding: 0;
     margin: 0;
   }
