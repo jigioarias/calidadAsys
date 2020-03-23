@@ -37,9 +37,21 @@
         <mat-card>
           <div class="d-flex">
             <div>
-              <mat-form-field id="id">
-                <input formControlName="item" matInput placeholder="Item" required />
+
+
+              <mat-form-field id="item">
+                <input matInput placeholder="Item" [matAutocomplete]="auto" formControlName="item">
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let item of items | async" [value]="item">
+                    <span>{{item.description}}</span>
+                  </mat-option>
+                </mat-autocomplete>
               </mat-form-field>
+
+
+              <!-- <mat-form-field id="id">
+                <input formControlName="item" matInput placeholder="Item" required />
+              </mat-form-field> -->
               <mat-form-field id="quantity">
                 <input formControlName="quantity" matInput placeholder="Cantidad" required />
               </mat-form-field>

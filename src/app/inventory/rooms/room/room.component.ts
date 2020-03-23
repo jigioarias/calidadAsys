@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { Item } from 'src/app/items/shared/item';
+import { ItemService } from 'src/app/items/shared/item.service';
 import { RoomState } from '../../shared/room';
 
 @Component({
@@ -10,10 +13,13 @@ import { RoomState } from '../../shared/room';
 export class RoomComponent implements OnInit {
   roomForm: FormGroup;
   itemInRoomForm: FormGroup;
+  items: Observable<Item[]>;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private itemService: ItemService) {}
 
   ngOnInit() {
+    this.items = this.itemService.list();
+
     this.roomForm = this.formBuilder.group({
       uuid: [null],
       id: [null, Validators.required],
