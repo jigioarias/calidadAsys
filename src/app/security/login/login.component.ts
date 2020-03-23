@@ -29,7 +29,6 @@ export class LoginComponent implements OnInit {
 
     this.authenticationService.login(user, pass).subscribe(successLoggin => {
       if (successLoggin) {
-        console.log('token tomado del localstorage', localStorage.getItem('token'));
         this.router.navigate(['/app']);
       } else {
         this.error = 'Fallo el login';

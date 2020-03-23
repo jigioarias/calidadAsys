@@ -2,20 +2,17 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { empty, Observable, of, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
-import { ResponseList } from 'src/app/general/shared/response';
+import { Response, ResponseList } from 'src/app/general/shared/response';
 import { environment } from 'src/environments/environment';
 import { User } from './user';
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   add(usuario: User) {
-
     let headers = new HttpHeaders().set('Authorization', localStorage.getItem('token'));
     let options = {
       headers: headers
@@ -25,12 +22,21 @@ export class UserService {
       data => console.log('success', data),
       error => console.log('oops', error)
     );
-
   }
 
+  edit(usuario: User) {
+    let headers = new HttpHeaders().set('Authorization', localStorage.getItem('token'));
+    let options = {
+      headers: headers
+    };
+    const url = environment.apiUrl;
+    this.http.put<any>(`${url}user`, usuario, options).subscribe(
+      data => console.log('success', data),
+      error => console.log('oops', error)
+    );
+  }
 
   list(): Observable<User[]> {
-
     let headers = new HttpHeaders().set('Authorization', localStorage.getItem('token'));
     let options = {
       headers: headers
@@ -40,19 +46,30 @@ export class UserService {
     const url = environment.apiUrl;
 
     return this.http.get<ResponseList<User>>(`${url}user`, options).pipe(
-      switchMap(
-        data => of(data.content)
-
-      ), catchError(
-        e => {
-          console.log(e);
-          return empty;
-        }
-      )
+      switchMap(data => of(data.content)),
+      catchError(e => {
+        console.log(e);
+        return empty;
+      })
     );
-
   }
 
+  find(id: string): Observable<User> {
+    let headers = new HttpHeaders().set('Authorization', localStorage.getItem('token'));
+    let options = {
+      headers: headers
+    };
+
+    const url = environment.apiUrl;
+
+    return this.http.get<Response<User>>(`${url}user/` + id, options).pipe(
+      switchMap(data => of(data.content)),
+      catchError(e => {
+        console.log(e);
+        return empty;
+      })
+    );
+  }
 
   handleError(error) {
     let errorMessage = '';
@@ -66,6 +83,4 @@ export class UserService {
     console.log(errorMessage);
     return throwError(errorMessage);
   }
-
-
 }

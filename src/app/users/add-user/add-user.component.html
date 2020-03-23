@@ -1,30 +1,27 @@
 <form [formGroup]="addForm">
+  <div class="usuario-container">
+    <mat-form-field>
+      <input matInput placeholder="login" formControlName="user" name="user" id="user" required />
+    </mat-form-field>
 
-    <div class="usuario-container">
+    <mat-form-field>
+      <input matInput formControlName="clave" placeholder="clave" name="clave" id="clave" type="password" required />
+    </mat-form-field>
 
-        <mat-form-field>
-            <input matInput placeholder="login" formControlName="user" name="user" id="user" required>
-        </mat-form-field>
+    <mat-form-field>
+      <mat-select formControlName="rol" matInput placeholder="Roles" required>
+        <ng-container *ngFor="let rol of roles">
+          <mat-option value="{{ rol.uuid }}">{{ rol.name }}</mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
 
-        <mat-form-field>
-            <input matInput formControlName="clave" placeholder="clave" name="clave" id="clave" type="password"
-                required>
-        </mat-form-field>
+    <mat-label>Estado:</mat-label>
+    <mat-radio-group aria-label="Estado" name="estado" id="estado" formControlName="estado">
+      <mat-radio-button value="true">Activo</mat-radio-button>
+      <mat-radio-button value="false">Inactivo</mat-radio-button>
+    </mat-radio-group>
 
-        <mat-form-field>
-            <mat-select formControlName="rol" matInput placeholder="Roles" required>
-                <ng-container *ngFor="let rol of roles">
-                    <mat-option value="{{ rol.uuid }}">{{ rol.description}}</mat-option>
-                </ng-container>
-            </mat-select>
-        </mat-form-field>
-
-        <mat-label>Estado:</mat-label>
-        <mat-radio-group aria-label="Estado" name="estado" id="estado" formControlName="estado">
-            <mat-radio-button value=true>Activo</mat-radio-button>
-            <mat-radio-button value=false>Inactivo</mat-radio-button>
-        </mat-radio-group>
-
-        <button mat-button (click)="onSubmit()">Ingresar</button>
-    </div>
+    <button mat-button (click)="onSubmit()">Ingresar</button>
+  </div>
 </form>

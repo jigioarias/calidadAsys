@@ -11,7 +11,7 @@ const ELEMENT_DATA: Item[] = [];
   styleUrls: ['./items-list.component.scss']
 })
 export class ItemsListComponent implements OnInit {
-  displayedColumns: string[] = ['description', 'quantity', 'price', 'stock'];
+  displayedColumns: string[] = ['name', 'description', 'quantity', 'price', 'stock', 'edit'];
   dataSource = ELEMENT_DATA;
   constructor(private router: Router, private itemService: ItemService) {}
 
@@ -20,5 +20,11 @@ export class ItemsListComponent implements OnInit {
       console.log(data);
       this.dataSource = data;
     });
+  }
+
+  editar(id: string) {
+    console.log(`/edit/${id}`);
+    console.log(this.router.url);
+    this.router.navigate([`/app/items/edit/${id}`]);
   }
 }
