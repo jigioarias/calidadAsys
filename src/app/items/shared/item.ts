@@ -6,4 +6,5 @@ export interface Item {
   quantity: BigInteger;
   stock: BigInteger;
   uuid: string;
+  name: string;
 }

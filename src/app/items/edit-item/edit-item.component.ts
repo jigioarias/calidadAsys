@@ -1,24 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Estado } from 'src/app/users/shared/estado';
 import { Item } from '../shared/item';
 import { ItemService } from '../shared/item.service';
 
 @Component({
-  selector: 'app-add-user',
-  templateUrl: './add-items.component.html',
-  styleUrls: ['./add-items.component.scss']
+  selector: 'ho-edit-item',
+  templateUrl: './edit-item.component.html',
+  styleUrls: ['./edit-item.component.scss']
 })
-export class AddItemsComponent implements OnInit {
+export class EditItemComponent implements OnInit {
+  id: string;
   item: Item;
-  submitted: boolean;
+  updated: boolean;
   addFormItem: FormGroup;
   estados: Estado[] = [
     { valor: '1', nombre: 'Activo' },
     { valor: '0', nombre: 'Inactivo' }
   ];
-
-  constructor(private formBuilder: FormBuilder, private itemService: ItemService) {}
+  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private itemService: ItemService) {}
 
   ngOnInit() {
     this.addFormItem = this.formBuilder.group({
@@ -29,21 +30,23 @@ export class AddItemsComponent implements OnInit {
       name: [null, Validators.required],
       price: [null, Validators.required]
     });
+
+    this.route.params.subscribe(params => {
+      this.id = params['id'];
+    });
+
+    this.itemService.find(this.id).subscribe(data => {
+      console.log(data);
+      this.item = data;
+    });
+
+    console.log(this.item);
   }
 
-  onSubmit() {
-    const cf: Item = {
-      price: this.addFormItem.get('price').value,
-      stock: this.addFormItem.get('stock').value,
-      description: this.addFormItem.get('description').value,
-      quantity: this.addFormItem.get('quantity').value,
-      active: this.addFormItem.get('active').value,
-      name: this.addFormItem.get('name').value,
-      hotelId: '',
-      uuid: '0'
-    };
-    console.log(cf);
-    this.itemService.add(cf);
-    this.submitted = true;
+  onSave() {
+    console.log('itemm>>>>', this.item);
+    this.itemService.edit(this.item);
+
+    this.updated = true;
   }
 }

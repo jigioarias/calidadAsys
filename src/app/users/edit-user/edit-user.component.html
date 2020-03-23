@@ -1,0 +1,49 @@
+<div *ngIf="updated">
+  <h4>El usuario fue actualizado</h4>
+</div>
+
+<form [formGroup]="addForm">
+  <div class="usuario-container">
+    <mat-form-field>
+      <input
+        matInput
+        [readonly]="true"
+        placeholder="login"
+        formControlName="user"
+        [(ngModel)]="usuario.user"
+        name="user"
+        id="user"
+        required
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+        matInput
+        formControlName="clave"
+        [(ngModel)]="usuario.password"
+        placeholder="clave"
+        name="clave"
+        id="clave"
+        type="password"
+        required
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select formControlName="rol" [(ngModel)]="usuario.rol" matInput placeholder="Roles" required>
+        <ng-container *ngFor="let rol of roles">
+          <mat-option value="{{ rol.uuid }}">{{ rol.name }}</mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-label>Estado:</mat-label>
+    <mat-radio-group aria-label="Estado" [(ngModel)]="usuario.state" name="estado" id="estado" formControlName="estado">
+      <mat-radio-button value="true">Activo</mat-radio-button>
+      <mat-radio-button value="false">Inactivo</mat-radio-button>
+    </mat-radio-group>
+
+    <button mat-button (click)="onSave()">Ingresar</button>
+  </div>
+</form>

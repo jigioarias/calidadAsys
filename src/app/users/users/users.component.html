@@ -7,5 +7,12 @@
     <mat-icon aria-hidden="false" aria-label="Listar Usuarios">list</mat-icon>
   </button>
 </div>
+<div class="menu-resource">
+  <div>
+    <a routerLink="list">Lista de Usuarios</a>
+    <a [routerLink]="add">Crear Usuario</a>
+  </div>
+  <span>Gestión de Usuarios</span>
+</div>
 
 <router-outlet></router-outlet>

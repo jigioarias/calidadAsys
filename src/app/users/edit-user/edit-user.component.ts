@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Estado } from '../shared/estado';
 import { Rol } from '../shared/rol';
 import { RolService } from '../shared/rol.service';
@@ -7,11 +8,13 @@ import { User } from '../shared/user';
 import { UserService } from '../shared/user.service';
 
 @Component({
-  selector: 'app-add-user',
-  templateUrl: './add-user.component.html',
-  styleUrls: ['./add-user.component.scss']
+  selector: 'ho-edit-user',
+  templateUrl: './edit-user.component.html',
+  styleUrls: ['./edit-user.component.scss']
 })
-export class AddUserComponent implements OnInit {
+export class EditUserComponent implements OnInit {
+  id: string;
+  updated: boolean;
   rol: string;
   estado: string;
   usuario: User;
@@ -25,7 +28,12 @@ export class AddUserComponent implements OnInit {
 
   roles: Rol[];
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService, private rolService: RolService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private userService: UserService,
+    private rolService: RolService
+  ) {}
 
   ngOnInit() {
     this.addForm = this.formBuilder.group({
@@ -38,20 +46,20 @@ export class AddUserComponent implements OnInit {
     this.rolService.list().subscribe(data => {
       this.roles = data;
     });
+
+    this.route.params.subscribe(params => {
+      this.id = params['id'];
+    });
+
+    this.userService.find(this.id).subscribe(data => {
+      console.log(data);
+      this.usuario = data;
+    });
   }
 
-  onSubmit() {
-    const cf: User = {
-      user: this.addForm.get('user').value,
-      password: this.addForm.get('clave').value,
-      rol: this.addForm.get('rol').value,
-      state: this.addForm.get('estado').value,
-      registrationDate: '',
-      hotelId: '',
-      personId: '0',
-      uuid: '1'
-    };
-    this.userService.add(cf);
-    this.submitted = true;
+  onSave() {
+    console.log('user>>>>', this.usuario);
+    this.userService.edit(this.usuario);
+    this.updated = true;
   }
 }

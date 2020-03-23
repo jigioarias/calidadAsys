@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
+import { ExcelService } from 'src/app/general/reports/ExcelService';
 import { User } from '../shared/user';
 import { UserService } from '../shared/user.service';
 
-
-const ELEMENT_DATA: User[] = [
-
-];
+const ELEMENT_DATA: User[] = [];
 
 @Component({
   selector: 'ho-users-list',
@@ -14,24 +12,24 @@ const ELEMENT_DATA: User[] = [
   styleUrls: ['./users-list.component.scss']
 })
 export class UsersListComponent implements OnInit {
-
-
-  displayedColumns: string[] = ['user', 'password', 'state'];
+  displayedColumns: string[] = ['user', 'password', 'state', 'edit'];
   dataSource = ELEMENT_DATA;
-  constructor(private router: Router, private userService: UserService) {
-
-  }
+  constructor(private router: Router, private userService: UserService, private excelService: ExcelService) {}
 
   ngOnInit() {
-    this.userService.list().subscribe(
-      data => {
-        console.log(data)
-        this.dataSource = data
-      }
-    );
-
-
-
+    this.userService.list().subscribe(data => {
+      console.log(data);
+      this.dataSource = data;
+    });
   }
 
+  exportAsXLSX(): void {
+    this.excelService.exportAsExcelFile(this.dataSource, 'listaUsuarios ');
+  }
+
+  editar(id: string) {
+    console.log(`/edit/${id}`);
+    console.log(this.router.url);
+    this.router.navigate([`/app/users/edit/${id}`]);
+  }
 }

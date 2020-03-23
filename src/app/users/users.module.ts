@@ -6,9 +6,10 @@ import { AddUserComponent } from './add-user/add-user.component';
 import { UsersListComponent } from './users-list/users-list.component';
 import { UsersRoutingModule } from './users-routing.module';
 import { UsersComponent } from './users/users.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
 
 @NgModule({
-  declarations: [UsersComponent, AddUserComponent, UsersListComponent],
+  declarations: [UsersComponent, AddUserComponent, UsersListComponent, EditUserComponent],
   imports: [CommonModule, ReactiveFormsModule, UsersRoutingModule, MaterialModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

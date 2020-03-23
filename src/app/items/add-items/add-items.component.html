@@ -1,5 +1,13 @@
+<div *ngIf="submitted">
+  <h4>El item fue ingresado exitosamente</h4>
+</div>
+
 <form [formGroup]="addFormItem">
   <div class="items-container">
+    <mat-form-field>
+      <input matInput placeholder="nombre" formControlName="name" name="name" id="name" required />
+    </mat-form-field>
+
     <mat-form-field>
       <input matInput placeholder="descripcion" formControlName="description" name="description" id="description" required />
     </mat-form-field>

@@ -1,0 +1,61 @@
+<div *ngIf="updated">
+  <h4>El item fue actualiz ado exitosamente</h4>
+</div>
+
+<form [formGroup]="addFormItem">
+  <div class="items-container">
+    <mat-form-field>
+      <input matInput placeholder="nombre" [(ngModel)]="item.name" formControlName="name" name="name" id="name" required />
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="descripcion"
+        [(ngModel)]="item.description"
+        formControlName="description"
+        name="description"
+        id="description"
+        required
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+        matInput
+        type="number"
+        [(ngModel)]="item.quantity"
+        formControlName="quantity"
+        placeholder="cantidad"
+        name="quantity"
+        id="quantity"
+        required
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+        matInput
+        [(ngModel)]="item.price"
+        type="number"
+        formControlName="price"
+        placeholder="precio"
+        name="price"
+        id="price"
+        required
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="number" [(ngModel)]="item.stock" formControlName="stock" placeholder="stock" name="stock" id="stock" required />
+    </mat-form-field>
+
+    <mat-label>Estado:</mat-label>
+    <mat-radio-group name="active" id="active" formControlName="active" [(ngModel)]="item.active">
+      <mat-radio-button value="true">Activo</mat-radio-button>
+      <mat-radio-button value="false">Inactivo</mat-radio-button>
+    </mat-radio-group>
+
+    <button mat-button (click)="onSave()">Ingresar</button>
+  </div>
+</form>
