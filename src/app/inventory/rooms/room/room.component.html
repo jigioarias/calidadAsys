@@ -1,71 +1,149 @@
 <mat-card class="create-client-card">
   <div class="form-container">
-    <mat-card-content>
-      <form [formGroup]="roomForm">
-        <h2>Información básica de la organización</h2>
-        <mat-card>
-          <div class="d-flex">
-            <mat-form-field id="id">
-              <input formControlName="id" matInput placeholder="Identificación." required />
-            </mat-form-field>
-            <mat-form-field id="floor">
-              <input formControlName="floor" matInput placeholder="Piso" required />
-            </mat-form-field>
-            <mat-form-field id="maxPersons">
-              <input formControlName="maxPersons" matInput placeholder="No. personas" required />
-            </mat-form-field>
-            <mat-form-field id="noBeds">
-              <input formControlName="noBeds" matInput placeholder="No. camas" required />
-            </mat-form-field>
-            <mat-form-field id="area">
-              <input formControlName="area" matInput placeholder="Area" />
-              <span matSuffix>m<sup>2</sup></span>
-            </mat-form-field>
-            <div id="freeParking">
-              <mat-slide-toggle formControlName="freeParking">Parqueadero gratis</mat-slide-toggle>
-            </div>
-          </div>
-          <hr />
-          <div>
-            <h3>Comodidades de la habitación</h3>
-            <ho-room-comforts></ho-room-comforts>
-          </div>
-        </mat-card>
-      </form>
-      <form [formGroup]="itemInRoomForm">
-        <h2>Items o productos disponibles de la habitación</h2>
-        <mat-card>
-          <div class="d-flex">
-            <div>
+    <form [formGroup]="roomForm">
+      <mat-horizontal-stepper class="xxx">
+        <mat-step [stepControl]="roomForm">
+          <form [formGroup]="roomForm">
+            <ng-template matStepLabel>Información básica</ng-template>
+            <div class="info-container">
 
 
-              <mat-form-field id="item">
-                <input matInput placeholder="Item" [matAutocomplete]="auto" formControlName="item">
-                <mat-autocomplete #auto="matAutocomplete">
-                  <mat-option *ngFor="let item of items | async" [value]="item">
-                    <span>{{item.description}}</span>
-                  </mat-option>
-                </mat-autocomplete>
-              </mat-form-field>
+              <div class="nos">
+                <mat-form-field id="id">
+                  <input formControlName="id" matInput placeholder="Identificación o número" required />
+                </mat-form-field>
 
-
-              <!-- <mat-form-field id="id">
-                <input formControlName="item" matInput placeholder="Item" required />
-              </mat-form-field> -->
-              <mat-form-field id="quantity">
-                <input formControlName="quantity" matInput placeholder="Cantidad" required />
-              </mat-form-field>
-              <div id="requireCheck">
-                <mat-slide-toggle formControlName="requireCheck">Requiere revisión</mat-slide-toggle>
+                <mat-form-field id="type">
+                  <input matInput placeholder="Tipo de habitación" [matAutocomplete]="auto" formControlName="roomType"
+                    required>
+                  <mat-autocomplete #auto="matAutocomplete" [displayWith]="getRoomTypeDescription">
+                    <mat-option *ngFor="let type of types" [value]="type">
+                      <span>{{type.description}}</span>
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
               </div>
+              <div class="nos">
+                <mat-form-field id="floor">
+                  <input formControlName="floor" matInput placeholder="Piso" required />
+                </mat-form-field>
+                <mat-form-field id="maxPersons">
+                  <input formControlName="maxPersons" matInput placeholder="No. personas" required />
+                </mat-form-field>
+                <mat-form-field id="noBeds">
+                  <input formControlName="noBeds" matInput placeholder="No. camas" required />
+                </mat-form-field>
+                <mat-form-field id="area">
+                  <input formControlName="area" matInput placeholder="Area" />
+                  <span matSuffix>m<sup>2</sup></span>
+                </mat-form-field>
+              </div>
+
+              <mat-form-field id="description">
+                <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="5"
+                  placeholder="Descripción general"></textarea>
+              </mat-form-field>
+              <div id="freeParking">
+                <mat-slide-toggle formControlName="freeParking">Parqueadero gratis</mat-slide-toggle>
+              </div>
+
             </div>
-            <div><p>Aqui tabla</p></div>
+            <div class="button-container">
+              <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
+              <button matStepperNext mat-stroked-button color="primary">Selecccionar comodidades</button>
+            </div>
+          </form>
+        </mat-step>
+
+        <mat-step optional>
+          <ng-template matStepLabel>Comodidades</ng-template>
+          <p>Selecciona las comodidades que posee o estan incluidas con esta habitación:</p>
+          <ho-room-comforts></ho-room-comforts>
+          <div class="button-container">
+            <button matStepperPrevious mat-stroked-button color="primary">Información básica</button>
+            <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
+            <button matStepperNext mat-stroked-button color="primary">Ingresar items habitación</button>
           </div>
-        </mat-card>
-      </form>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
-    </mat-card-actions>
+        </mat-step>
+
+        <mat-step [stepControl]="itemInRoomForm" optional>
+          <form [formGroup]="itemInRoomForm">
+            <ng-template matStepLabel>Items</ng-template>
+            <div class="items-container">
+              <mat-card>
+                <span>Seleccione el item que estará disponible en la habitación</span>
+                <mat-form-field id="item">
+                  <input matInput placeholder="Item" [matAutocomplete]="auto" formControlName="item" required>
+                  <mat-autocomplete #auto="matAutocomplete" [displayWith]="getItemDescription">
+                    <mat-option *ngFor="let item of items | async" [value]="item">
+                      <span>{{item.description}}</span>
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+
+
+                <!-- <mat-form-field id="id">
+                            <input formControlName="item" matInput placeholder="Item" required />
+                          </mat-form-field> -->
+                <mat-form-field id="quantity">
+                  <input formControlName="quantity" matInput placeholder="Cantidad" required />
+                </mat-form-field>
+                <div id="requireCheck">
+                  <mat-slide-toggle formControlName="requireCheck">Requiere revisión</mat-slide-toggle>
+                </div>
+
+                <div class="button-container center">
+                  <button matStepperNext mat-stroked-button color="primary" (click)="agregarItem()">Agregar
+                    Item</button>
+                </div>
+
+              </mat-card>
+              <mat-card>
+                <span>Items agregados a la habitación</span>
+                <!-- <div class="table-container"> -->
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z2">
+                  <ng-container matColumnDef="item">
+                    <th mat-header-cell *matHeaderCellDef>Item</th>
+                    <td mat-cell *matCellDef="let itemInRoom">{{ itemInRoom.description }}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="quantity">
+                    <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+                    <td mat-cell *matCellDef="let itemInRoom">{{ itemInRoom.quantity }}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="requireCheck">
+                    <th mat-header-cell *matHeaderCellDef>Revisión</th>
+                    <td mat-cell *matCellDef="let itemInRoom">{{ itemInRoom.requireCheck }}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="remove">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let itemInRoom">
+                      <mat-icon (click)="removeItem(itemInRoom)">delete</mat-icon>
+                    </td>
+
+                  </ng-container>
+
+                  <!-- <ng-container matColumnDef="remove">
+                    <td mat-cell *matCellDef="let itemInRoom">
+                      {{ itemInRoom.requireCheck }}
+                    </td>
+                  </!--> -->
+
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                </table>
+                <!-- </div> -->
+
+              </mat-card>
+            </div>
+            <div class="button-container">
+              <button matStepperPrevious mat-stroked-button color="primary">Selecccionar comodidades</button>
+              <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
+            </div>
+          </form>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </form>
   </div>
 </mat-card>

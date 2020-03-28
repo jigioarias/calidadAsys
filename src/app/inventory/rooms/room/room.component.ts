@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatTableDataSource } from '@angular/material';
 import { Observable } from 'rxjs';
 import { Item } from 'src/app/items/shared/item';
 import { ItemService } from 'src/app/items/shared/item.service';
-import { RoomState } from '../../shared/room';
+import { ItemInRoom, RoomState, RoomType } from '../../shared/room';
 
 @Component({
   selector: 'ho-room',
@@ -14,10 +15,31 @@ export class RoomComponent implements OnInit {
   roomForm: FormGroup;
   itemInRoomForm: FormGroup;
   items: Observable<Item[]>;
+  displayedColumns: string[] = ['item', 'quantity', 'requireCheck', 'remove'];
+  itemsInRoom: ItemInRoom[] = [];
+  dataSource: MatTableDataSource<ItemInRoom>;
+
+  types: RoomType[];
 
   constructor(private formBuilder: FormBuilder, private itemService: ItemService) {}
 
   ngOnInit() {
+    this.dataSource = new MatTableDataSource(this.itemsInRoom);
+
+    this.types = [
+      {
+        uuid: 'uuid1',
+        description: 'Tipo1',
+        priceDay: 100,
+        priceHour: 10
+      },
+      {
+        uuid: 'uuid2',
+        description: 'Tipo2',
+        priceDay: 200,
+        priceHour: 20
+      }
+    ];
     this.items = this.itemService.list();
 
     this.roomForm = this.formBuilder.group({
@@ -29,7 +51,7 @@ export class RoomComponent implements OnInit {
       maxPersons: [2, Validators.required],
       noBeds: [1, Validators.required],
       freeParking: [false, Validators.required],
-      roomType_uuid: [null, Validators.required],
+      roomType: [null, Validators.required],
       items: [null],
       comforts: [null],
       state: [RoomState.DISPONIBLE]
@@ -44,5 +66,43 @@ export class RoomComponent implements OnInit {
 
   guardar() {
     console.log('guardar');
+  }
+
+  getItemDescription(item: Item) {
+    // return item.description;
+    // return 'Item';
+    return item ? item.description : '';
+  }
+
+  getRoomTypeDescription(roomType: RoomType) {
+    // return item.description;
+    // return 'Item';
+    return roomType ? roomType.description : '';
+  }
+
+  agregarItem() {
+    console.log('agregar item', this.itemInRoomForm.value);
+    console.log('agregar item', this.itemInRoomForm.value.quantity);
+    const itemInRoom: ItemInRoom = {
+      item_uuid: this.itemInRoomForm.value.item.uuid,
+      description: this.itemInRoomForm.value.item.description,
+      quantity: this.itemInRoomForm.value.quantity,
+      requireCheck: this.itemInRoomForm.value.requireCheck
+    } as ItemInRoom;
+    // this.itemsInRoom.push(itemInRoom);
+    // this.dataSource = null;
+    // this.dataSource = this.itemsInRoom;
+    // console.log('item transformado', itemInRoom);
+    this.dataSource.data.push(itemInRoom);
+    this.dataSource.filter = '';
+
+    // console.log('idatasource', this.dataSource);
+  }
+
+  removeItem(itemInRoom: ItemInRoom) {
+    console.log('borra => ', itemInRoom);
+
+    this.dataSource.data = this.dataSource.data.filter(item => item.item_uuid != itemInRoom.item_uuid);
+    // this.dataSource.filter = '';
   }
 }

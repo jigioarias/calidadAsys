@@ -14,6 +14,7 @@ import {
   MatSelectModule,
   MatSidenavModule,
   MatSlideToggleModule,
+  MatStepperModule,
   MatTableModule,
   MatToolbarModule
 } from '@angular/material';
@@ -36,7 +37,8 @@ import {
     MatRadioModule,
     MatCardModule,
     MatAutocompleteModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatStepperModule
   ],
   exports: [
     MatSidenavModule,
@@ -53,7 +55,8 @@ import {
     MatRadioModule,
     MatCardModule,
     MatAutocompleteModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatStepperModule
   ]
 })
 export class MaterialModule {}
