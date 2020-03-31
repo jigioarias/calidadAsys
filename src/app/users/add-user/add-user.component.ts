@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Person } from 'src/app/persons/shared/person';
+import { PersonService } from 'src/app/persons/shared/person.service';
 import { Estado } from '../shared/estado';
 import { Rol } from '../shared/rol';
 import { RolService } from '../shared/rol.service';
@@ -13,6 +15,7 @@ import { UserService } from '../shared/user.service';
 })
 export class AddUserComponent implements OnInit {
   rol: string;
+  person: string;
   estado: string;
   usuario: User;
   addForm: FormGroup;
@@ -24,19 +27,30 @@ export class AddUserComponent implements OnInit {
   ];
 
   roles: Rol[];
+  persons: Person[];
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService, private rolService: RolService) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private userService: UserService,
+    private rolService: RolService,
+    private personService: PersonService
+  ) {}
 
   ngOnInit() {
     this.addForm = this.formBuilder.group({
       user: [null, Validators.required],
       clave: [null, Validators.required],
       rol: [null, Validators.required],
-      estado: [null, Validators.required]
+      estado: [null, Validators.required],
+      person: [null, Validators.required]
     });
 
     this.rolService.list().subscribe(data => {
       this.roles = data;
+    });
+
+    this.personService.list('EMPLOYEE').subscribe(data => {
+      this.persons = data;
     });
   }
 
@@ -48,7 +62,7 @@ export class AddUserComponent implements OnInit {
       state: this.addForm.get('estado').value,
       registrationDate: '',
       hotelId: '',
-      personId: '0',
+      personId: this.addForm.get('person').value,
       uuid: '1'
     };
     this.userService.add(cf);

@@ -4,6 +4,7 @@ import { ClientsModule } from './clients/clients.module';
 import { HomeComponent } from './general/home/home.component';
 import { InventoryModule } from './inventory/inventory.module';
 import { ItemsModule } from './items/items.module';
+import { ReportsModule } from './reports/reports.module';
 import { UsersModule } from './users/users.module';
 
 const routes: Routes = [
@@ -26,6 +27,10 @@ const routes: Routes = [
       {
         path: '',
         loadChildren: () => ItemsModule
+      },
+      {
+        path: '',
+        loadChildren: () => ReportsModule
       }
     ]
   },

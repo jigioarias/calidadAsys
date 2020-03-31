@@ -9,6 +9,13 @@
     </mat-form-field>
 
     <mat-form-field>
+      <mat-select formControlName="person" matInput placeholder="Empleados" required>
+        <ng-container *ngFor="let person of persons">
+          <mat-option value="{{ person.uuid }}">{{ person.name }}</mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
       <mat-select formControlName="rol" matInput placeholder="Roles" required>
         <ng-container *ngFor="let rol of roles">
           <mat-option value="{{ rol.uuid }}">{{ rol.name }}</mat-option>
