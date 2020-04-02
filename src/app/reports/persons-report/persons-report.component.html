@@ -1,24 +1,21 @@
 <form [formGroup]="reportFilter">
   <div class="items-container">
     <mat-form-field>
-      <mat-label>Fecha Inicial</mat-label>
-      <input matInput [matDatepicker]="picker" formControlName="initialDate" />
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picaker></mat-datepicker>
+      <input matInput [matDatepicker]="initDate" [(ngModel)]="fechaInicial" placeholder="Fecha Inicial" [formControl]="date" />
+      <mat-datepicker-toggle matSuffix [for]="initDate"></mat-datepicker-toggle>
+      <mat-datepicker #initDate></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>Fecha Final</mat-label>
-      <input matInput [matDatepicker]="picker" formControlName="endDate" />
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picaker></mat-datepicker>
+      <input matInput [(ngModel)]="fechaFinal" [matDatepicker]="endDate" placeholder="Fecha Final" [formControl]="date" />
+      <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+      <mat-datepicker #endDate></mat-datepicker>
     </mat-form-field>
-
     <button mat-button (click)="onSubmit()">Consultar</button>
   </div>
 </form>
 
-<div *ngIf="showReport">
+<div class="tabla" *ngIf="showReport">
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Nombre</th>
