@@ -1,4 +1,6 @@
-<div class="tabla"><h5>Reporte de Personas</h5></div>
+<div class="tabla">
+  <h5>Reporte de Ventas</h5>
+</div>
 
 <form [formGroup]="reportFilter">
   <div class="items-container">
@@ -19,36 +21,35 @@
 
 <div class="tabla" *ngIf="showReport">
   <button mat-button routerLink="list" (click)="exportAsXLSX()">
-    <mat-icon aria-hidden="false" aria-label="Listar Usuarios">list</mat-icon>
+    <mat-icon aria-hidden="false" aria-label="Listar Ventas">list</mat-icon>
   </button>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-    <ng-container matColumnDef="document">
+    <ng-container matColumnDef="client">
       <th mat-header-cell *matHeaderCellDef>Nombre</th>
-      <td mat-cell *matCellDef="let element">{{ element.document }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.client.name }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="firstName">
-      <th mat-header-cell *matHeaderCellDef>Nombre</th>
-      <td mat-cell *matCellDef="let element">{{ element.firstName }}</td>
+    <ng-container matColumnDef="gross">
+      <th mat-header-cell *matHeaderCellDef>SubTotal</th>
+      <td mat-cell *matCellDef="let element">{{ element.values.gross }}</td>
+    </ng-container>
+    <ng-container matColumnDef="discount">
+      <th mat-header-cell *matHeaderCellDef>Descuento</th>
+      <td mat-cell *matCellDef="let element">{{ element.values.discount }}</td>
+    </ng-container>
+    <ng-container matColumnDef="tax">
+      <th mat-header-cell *matHeaderCellDef>IVA</th>
+      <td mat-cell *matCellDef="let element">{{ element.values.tax }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="lastName">
-      <th mat-header-cell *matHeaderCellDef>Nombre</th>
-      <td mat-cell *matCellDef="let element">{{ element.lastName }}</td>
+    <ng-container matColumnDef="total">
+      <th mat-header-cell *matHeaderCellDef>Total</th>
+      <td mat-cell *matCellDef="let element">{{ element.values.total }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="phone">
-      <th mat-header-cell *matHeaderCellDef>Telefono</th>
-      <td mat-cell *matCellDef="let element">{{ element.phone }}</td>
-    </ng-container>
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef>Telefono</th>
-      <td mat-cell *matCellDef="let element">{{ element.email }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="country">
-      <th mat-header-cell *matHeaderCellDef>Pais</th>
-      <td mat-cell *matCellDef="let element">{{ element.country.name }}</td>
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef>Fecha Venta</th>
+      <td mat-cell *matCellDef="let element">{{ element.date }}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

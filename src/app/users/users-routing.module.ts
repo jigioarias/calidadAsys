@@ -24,7 +24,7 @@ const routes: Routes = [
         component: UsersListComponent
       },
 
-      { path: '', redirectTo: 'list', pathMatch: 'prefix' }
+      { path: '', redirectTo: 'list', pathMatch: 'full' }
     ]
   }
 ];

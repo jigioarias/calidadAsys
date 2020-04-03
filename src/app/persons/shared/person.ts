@@ -12,7 +12,8 @@ export interface Person {
   email: string;
   employee: 0;
   guest: 0;
-  name: string;
+  lastName: string;
+  firstName: string;
   phone: string;
   uuid: string;
 }
