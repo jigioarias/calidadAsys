@@ -13,6 +13,13 @@
       <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
       <mat-datepicker #endDate></mat-datepicker>
     </mat-form-field>
+
+    <mat-label>Estado:</mat-label>
+    <mat-radio-group name="nationality" id="nationality" formControlName="nationality" [(ngModel)]="nationality">
+      <mat-radio-button value="ALL">Todos</mat-radio-button>
+      <mat-radio-button value="OUTSIDE">Extranjeros</mat-radio-button>
+      <mat-radio-button value="LOCAL">Locales</mat-radio-button>
+    </mat-radio-group>
     <button mat-button (click)="onSubmit()">Consultar</button>
   </div>
 </form>
@@ -23,8 +30,8 @@
   </button>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="document">
-      <th mat-header-cell *matHeaderCellDef>Nombre</th>
-      <td mat-cell *matCellDef="let element">{{ element.document }}</td>
+      <th mat-header-cell *matHeaderCellDef>Documento</th>
+      <td mat-cell *matCellDef="let element">{{ element.documentType }}-{{ element.document }}</td>
     </ng-container>
 
     <ng-container matColumnDef="firstName">
@@ -33,7 +40,7 @@
     </ng-container>
 
     <ng-container matColumnDef="lastName">
-      <th mat-header-cell *matHeaderCellDef>Nombre</th>
+      <th mat-header-cell *matHeaderCellDef>Apellido</th>
       <td mat-cell *matCellDef="let element">{{ element.lastName }}</td>
     </ng-container>
 
@@ -42,12 +49,12 @@
       <td mat-cell *matCellDef="let element">{{ element.phone }}</td>
     </ng-container>
     <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef>Telefono</th>
+      <th mat-header-cell *matHeaderCellDef>Email</th>
       <td mat-cell *matCellDef="let element">{{ element.email }}</td>
     </ng-container>
 
     <ng-container matColumnDef="country">
-      <th mat-header-cell *matHeaderCellDef>Pais</th>
+      <th mat-header-cell *matHeaderCellDef>Nacionalidad</th>
       <td mat-cell *matCellDef="let element">{{ element.country.name }}</td>
     </ng-container>
 

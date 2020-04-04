@@ -19,14 +19,13 @@ export class SaleService {
     };
 
     const url = environment.apiUrl;
-    console.log(`${url}sale?nationality=` + nationality + '&initDate' + initDate + '&endDate=' + endDate);
+    console.log(`${url}sale?nationality=` + nationality + '&initDate=' + initDate + '&endDate=' + endDate);
 
     return this.http
-      .get<ResponseList<Sale>>(`${url}sale?nationality=` + nationality + '&initDate=2020-01-01T08:00&endDate=2020-05-03T08:00', options)
+      .get<ResponseList<Sale>>(`${url}sale?nationality=` + nationality + '&initDate=' + initDate + '&endDate=' + endDate, options)
       .pipe(
         switchMap(data => of(data.content)),
         catchError(e => {
-          console.log('>>>>ERRORRRRR>>>', e);
           return empty;
         })
       );
