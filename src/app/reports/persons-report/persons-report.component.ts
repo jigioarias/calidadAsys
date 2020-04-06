@@ -3,9 +3,12 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { ExcelService } from 'src/app/general/reports/ExcelService';
 import { Fecha } from 'src/app/general/shared/fecha';
+import { Hotel } from 'src/app/general/shared/hotel';
+import { HotelService } from 'src/app/general/shared/hotel.service';
 import { Person } from 'src/app/persons/shared/person';
 import { PersonService } from 'src/app/persons/shared/person.service';
 import { isNull } from 'util';
+import { ReportService } from '../shared/report.service';
 
 const ELEMENT_DATA: Person[] = [];
 
@@ -19,6 +22,7 @@ export class PersonsReportComponent implements OnInit {
   reportFilter: FormGroup;
   fechaInicial: any;
   fechaFinal: any;
+  hotel: Hotel;
 
   showReport: boolean;
 
@@ -29,12 +33,17 @@ export class PersonsReportComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private personService: PersonService,
-    private excelService: ExcelService
+    private excelService: ExcelService,
+    private hotelService: HotelService
   ) {}
 
   ngOnInit() {
     this.fechaInicial = new Date();
     this.fechaFinal = new Date();
+    this.hotelService.find().subscribe((data) => {
+      this.hotel = data;
+      console.log('hotel>>>>', this.hotel.name);
+    });
 
     this.reportFilter = this.formBuilder.group({
       endDate: [null, Validators.required],
@@ -69,6 +78,14 @@ export class PersonsReportComponent implements OnInit {
 
   exportAsXLSX(): void {
     const fechaExport = new Date();
-    this.router.navigate(['/' + this.excelService.exportAsExcelFileRoute(this.dataSource, 'clientes' + fechaExport, 'personsReport')]);
+
+    this.router.navigate([
+      '/' +
+        this.excelService.exportAsExcelFileRoute(
+          ReportService.convertPersonToMigration(this.dataSource, this.hotel),
+          'clientes' + fechaExport,
+          'personsReport'
+        ),
+    ]);
   }
 }
