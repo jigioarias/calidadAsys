@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material';
 import { Observable } from 'rxjs';
 import { Item } from 'src/app/items/shared/item';
@@ -9,7 +9,7 @@ import { ItemInRoom, RoomState, RoomType } from '../../shared/room';
 @Component({
   selector: 'ho-room',
   templateUrl: './room.component.html',
-  styleUrls: ['./room.component.scss']
+  styleUrls: ['./room.component.scss'],
 })
 export class RoomComponent implements OnInit {
   roomForm: FormGroup;
@@ -31,14 +31,14 @@ export class RoomComponent implements OnInit {
         uuid: 'uuid1',
         description: 'Tipo1',
         priceDay: 100,
-        priceHour: 10
+        priceHour: 10,
       },
       {
         uuid: 'uuid2',
         description: 'Tipo2',
         priceDay: 200,
-        priceHour: 20
-      }
+        priceHour: 20,
+      },
     ];
     this.items = this.itemService.list();
 
@@ -54,13 +54,13 @@ export class RoomComponent implements OnInit {
       roomType: [null, Validators.required],
       items: [null],
       comforts: [null],
-      state: [RoomState.DISPONIBLE]
+      state: [RoomState.DISPONIBLE],
     });
 
     this.itemInRoomForm = this.formBuilder.group({
       item: [null, Validators.required],
       quantity: [1, Validators.required],
-      requireCheck: [true, Validators.required]
+      requireCheck: [true, Validators.required],
     });
   }
 
@@ -80,29 +80,57 @@ export class RoomComponent implements OnInit {
     return roomType ? roomType.description : '';
   }
 
-  agregarItem() {
-    console.log('agregar item', this.itemInRoomForm.value);
-    console.log('agregar item', this.itemInRoomForm.value.quantity);
-    const itemInRoom: ItemInRoom = {
+  addItem() {
+    if (!this.itemInRoomForm.valid) {
+      return;
+    }
+
+    if (this.existItemInList()) {
+      const controlItem = this.itemInRoomForm.get('item');
+      controlItem.setErrors({ itemAreadyExist: true });
+    } else {
+      const itemInRoom: ItemInRoom = this.createItemInRoom();
+      this.dataSource.data.push(itemInRoom);
+      this.dataSource.filter = '';
+      this.resetItemInRoomForm();
+    }
+  }
+
+  resetItemInRoomForm() {
+    this.itemInRoomForm.reset(
+      {
+        item: null,
+        quantity: 1,
+        requireCheck: true,
+      },
+      { emitEvent: false }
+    );
+  }
+
+  private existItemInList() {
+    const itemsInList = this.dataSource.data;
+    const uuidItemToAdd = this.itemInRoomForm.value.item.uuid;
+    const existItemInList = itemsInList.find((item) => uuidItemToAdd == item.item_uuid);
+    return existItemInList;
+  }
+
+  private createItemInRoom(): ItemInRoom {
+    return {
       item_uuid: this.itemInRoomForm.value.item.uuid,
       description: this.itemInRoomForm.value.item.description,
       quantity: this.itemInRoomForm.value.quantity,
-      requireCheck: this.itemInRoomForm.value.requireCheck
+      requireCheck: this.itemInRoomForm.value.requireCheck,
     } as ItemInRoom;
-    // this.itemsInRoom.push(itemInRoom);
-    // this.dataSource = null;
-    // this.dataSource = this.itemsInRoom;
-    // console.log('item transformado', itemInRoom);
-    this.dataSource.data.push(itemInRoom);
-    this.dataSource.filter = '';
+  }
 
-    // console.log('idatasource', this.dataSource);
+  getControl(controlName: string): AbstractControl {
+    return this.itemInRoomForm.get(controlName);
   }
 
   removeItem(itemInRoom: ItemInRoom) {
     console.log('borra => ', itemInRoom);
 
-    this.dataSource.data = this.dataSource.data.filter(item => item.item_uuid != itemInRoom.item_uuid);
+    this.dataSource.data = this.dataSource.data.filter((item) => item.item_uuid != itemInRoom.item_uuid);
     // this.dataSource.filter = '';
   }
 }
