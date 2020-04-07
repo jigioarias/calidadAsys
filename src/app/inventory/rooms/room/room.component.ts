@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material';
 import { Observable } from 'rxjs';
-import { Item } from 'src/app/items/shared/item';
-import { ItemService } from 'src/app/items/shared/item.service';
+import { Item } from '../../shared/item';
+import { ItemService } from '../../shared/item.service';
 import { ItemInRoom, RoomState, RoomType } from '../../shared/room';
 
 @Component({
   selector: 'ho-room',
   templateUrl: './room.component.html',
-  styleUrls: ['./room.component.scss'],
+  styleUrls: ['./room.component.scss']
 })
 export class RoomComponent implements OnInit {
   roomForm: FormGroup;
@@ -31,14 +31,14 @@ export class RoomComponent implements OnInit {
         uuid: 'uuid1',
         description: 'Tipo1',
         priceDay: 100,
-        priceHour: 10,
+        priceHour: 10
       },
       {
         uuid: 'uuid2',
         description: 'Tipo2',
         priceDay: 200,
-        priceHour: 20,
-      },
+        priceHour: 20
+      }
     ];
     this.items = this.itemService.list();
 
@@ -54,13 +54,13 @@ export class RoomComponent implements OnInit {
       roomType: [null, Validators.required],
       items: [null],
       comforts: [null],
-      state: [RoomState.DISPONIBLE],
+      state: [RoomState.DISPONIBLE]
     });
 
     this.itemInRoomForm = this.formBuilder.group({
       item: [null, Validators.required],
       quantity: [1, Validators.required],
-      requireCheck: [true, Validators.required],
+      requireCheck: [true, Validators.required]
     });
   }
 
@@ -101,7 +101,7 @@ export class RoomComponent implements OnInit {
       {
         item: null,
         quantity: 1,
-        requireCheck: true,
+        requireCheck: true
       },
       { emitEvent: false }
     );
@@ -119,7 +119,7 @@ export class RoomComponent implements OnInit {
       item_uuid: this.itemInRoomForm.value.item.uuid,
       description: this.itemInRoomForm.value.item.description,
       quantity: this.itemInRoomForm.value.quantity,
-      requireCheck: this.itemInRoomForm.value.requireCheck,
+      requireCheck: this.itemInRoomForm.value.requireCheck
     } as ItemInRoom;
   }
 

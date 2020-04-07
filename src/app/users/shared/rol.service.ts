@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { empty, Observable, of } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
@@ -10,31 +10,17 @@ import { Rol } from './rol';
   providedIn: 'root'
 })
 export class RolService {
-
-  constructor(private http: HttpClient) { }
-
+  constructor(private http: HttpClient) {}
 
   list(): Observable<Rol[]> {
-
-    let headers = new HttpHeaders().set('Authorization', localStorage.getItem('token'));
-    let options = {
-      headers: headers
-    };
     let roles: Rol[];
     const url = environment.apiUrl;
-
-    return this.http.get<ResponseList<Rol>>(`${url}role`, options).pipe(
-      switchMap(
-        data => of(data.content)
-
-      ), catchError(
-        e => {
-          console.log(e);
-          return empty;
-        }
-      )
+    return this.http.get<ResponseList<Rol>>(`${url}role`).pipe(
+      switchMap((data) => of(data.content)),
+      catchError((e) => {
+        console.log(e);
+        return empty;
+      })
     );
-
   }
-
 }

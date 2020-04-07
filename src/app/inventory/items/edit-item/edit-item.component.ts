@@ -3,13 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Estado } from 'src/app/users/shared/estado';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
-import { Item } from '../shared/item';
-import { ItemService } from '../shared/item.service';
+import { Item } from '../../shared/item';
+import { ItemService } from '../../shared/item.service';
 
 @Component({
   selector: 'ho-edit-item',
   templateUrl: './edit-item.component.html',
-  styleUrls: ['./edit-item.component.scss'],
+  styleUrls: ['./edit-item.component.scss']
 })
 export class EditItemComponent implements OnInit {
   id: string;
@@ -18,7 +18,7 @@ export class EditItemComponent implements OnInit {
   addFormItem: FormGroup;
   estados: Estado[] = [
     { valor: '1', nombre: 'Activo' },
-    { valor: '0', nombre: 'Inactivo' },
+    { valor: '0', nombre: 'Inactivo' }
   ];
   constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private itemService: ItemService) {}
 
@@ -29,7 +29,7 @@ export class EditItemComponent implements OnInit {
       stock: [null, Validators.required],
       active: [null, Validators.required],
       name: [null, Validators.required],
-      price: [null, Validators.required],
+      price: [null, Validators.required]
     });
 
     this.route.params.subscribe((params) => {
@@ -48,7 +48,7 @@ export class EditItemComponent implements OnInit {
     this.itemService.edit(this.item);
     Swal.fire({
       text: 'El item fue actualizado con éxito!',
-      icon: 'success',
+      icon: 'success'
     });
   }
 }

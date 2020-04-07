@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { empty, Observable, of } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
@@ -13,17 +13,11 @@ export class PersonService {
   constructor(private http: HttpClient) {}
 
   list(type: string): Observable<Person[]> {
-    let headers = new HttpHeaders().set('Authorization', localStorage.getItem('token'));
-    let options = {
-      headers: headers
-    };
-
     let usuarios: Person[];
     const url = environment.apiUrl;
-
-    return this.http.get<ResponseList<Person>>(`${url}person?type=` + type, options).pipe(
-      switchMap(data => of(data.content)),
-      catchError(e => {
+    return this.http.get<ResponseList<Person>>(`${url}person?type=` + type).pipe(
+      switchMap((data) => of(data.content)),
+      catchError((e) => {
         console.log(e);
         return empty;
       })
@@ -31,19 +25,13 @@ export class PersonService {
   }
 
   listSale(nationality: string, initDate: string, endDate: string): Observable<Person[]> {
-    let headers = new HttpHeaders().set('Authorization', localStorage.getItem('token'));
-    let options = {
-      headers: headers
-    };
-
     let usuarios: Person[];
     const url = environment.apiUrl;
-
     return this.http
-      .get<ResponseList<Person>>(`${url}person?nationality=` + nationality + '&initDate' + initDate + '&endDate=' + endDate, options)
+      .get<ResponseList<Person>>(`${url}person?nationality=` + nationality + '&initDate' + initDate + '&endDate=' + endDate)
       .pipe(
-        switchMap(data => of(data.content)),
-        catchError(e => {
+        switchMap((data) => of(data.content)),
+        catchError((e) => {
           console.log(e);
           return empty;
         })
