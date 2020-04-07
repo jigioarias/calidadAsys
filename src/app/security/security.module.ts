@@ -10,6 +10,5 @@ import { SecurityComponent } from './security/security.component';
 @NgModule({
   declarations: [LoginComponent, SecurityComponent],
   imports: [CommonModule, ReactiveFormsModule, MaterialModule, SecurityRoutingModule, HttpClientModule],
-  exports: [LoginComponent]
 })
 export class SecurityModule {}
