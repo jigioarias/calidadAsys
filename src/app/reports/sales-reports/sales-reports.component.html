@@ -20,7 +20,7 @@
 </form>
 
 <div class="tabla" *ngIf="showReport">
-  <button mat-button routerLink="list" (click)="exportAsXLSX()">
+  <button mat-button (click)="exportAsXLSX()">
     <mat-icon aria-hidden="false" aria-label="Listar Ventas">list</mat-icon>
   </button>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">

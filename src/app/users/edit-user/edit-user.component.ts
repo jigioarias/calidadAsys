@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Estado } from '../shared/estado';
 import { Rol } from '../shared/rol';
 import { RolService } from '../shared/rol.service';
@@ -10,7 +11,7 @@ import { UserService } from '../shared/user.service';
 @Component({
   selector: 'ho-edit-user',
   templateUrl: './edit-user.component.html',
-  styleUrls: ['./edit-user.component.scss']
+  styleUrls: ['./edit-user.component.scss'],
 })
 export class EditUserComponent implements OnInit {
   id: string;
@@ -19,11 +20,10 @@ export class EditUserComponent implements OnInit {
   estado: string;
   usuario: User;
   addForm: FormGroup;
-  submitted: boolean;
 
   estados: Estado[] = [
     { valor: '1', nombre: 'Activo' },
-    { valor: '0', nombre: 'Inactivo' }
+    { valor: '0', nombre: 'Inactivo' },
   ];
 
   roles: Rol[];
@@ -40,26 +40,28 @@ export class EditUserComponent implements OnInit {
       user: [null, Validators.required],
       clave: [null, Validators.required],
       rol: [null, Validators.required],
-      estado: [null, Validators.required]
+      estado: [null, Validators.required],
     });
 
-    this.rolService.list().subscribe(data => {
+    this.rolService.list().subscribe((data) => {
       this.roles = data;
     });
 
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.id = params['id'];
     });
 
-    this.userService.find(this.id).subscribe(data => {
+    this.userService.find(this.id).subscribe((data) => {
       console.log(data);
       this.usuario = data;
     });
   }
 
   onSave() {
-    console.log('user>>>>', this.usuario);
     this.userService.edit(this.usuario);
-    this.updated = true;
+    Swal.fire({
+      text: 'El usuario fue actualizado con éxito!',
+      icon: 'success',
+    });
   }
 }
