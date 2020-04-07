@@ -1,9 +1,6 @@
-<div *ngIf="updated">
-  <h4>El usuario fue actualizado</h4>
-</div>
-
 <form [formGroup]="addForm">
   <div class="usuario-container">
+    <h6>Actualizar Usuario</h6>
     <mat-form-field>
       <input
         matInput
@@ -44,6 +41,6 @@
       <mat-radio-button value="false">Inactivo</mat-radio-button>
     </mat-radio-group>
 
-    <button mat-button (click)="onSave()">Ingresar</button>
+    <button mat-button (click)="onSave()">Actualizar</button>
   </div>
 </form>

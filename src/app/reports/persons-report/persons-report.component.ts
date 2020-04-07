@@ -20,10 +20,9 @@ const ELEMENT_DATA: Person[] = [];
 export class PersonsReportComponent implements OnInit {
   date = new FormControl(new Date());
   reportFilter: FormGroup;
-  fechaInicial: any;
-  fechaFinal: any;
   hotel: Hotel;
-
+  fechaInicial: any = '4/1/2020';
+  fechaFinal: any = '5/1/2020';
   showReport: boolean;
 
   displayedColumns: string[] = ['document', 'firstName', 'lastName', 'phone', 'email', 'country'];
@@ -38,18 +37,16 @@ export class PersonsReportComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.fechaInicial = new Date();
-    this.fechaFinal = new Date();
     this.hotelService.find().subscribe((data) => {
       this.hotel = data;
-      console.log('hotel>>>>', this.hotel.name);
     });
 
     this.reportFilter = this.formBuilder.group({
-      endDate: [null, Validators.required],
-      initialDate: [null, Validators.required],
-      nationality: [null, Validators.required],
+      endDate: [new Date(), Validators.required],
+      initialDate: [new Date(), Validators.required],
+      nationality: [new Date(), Validators.required],
     });
+
     this.fechaFinal = Fecha.DateToYYYYMMDD(this.fechaFinal);
     this.fechaInicial = Fecha.DateToYYYYMMDD(this.fechaInicial);
     this.personService.listSale(this.nationality, this.fechaInicial, this.fechaFinal).subscribe((data) => {

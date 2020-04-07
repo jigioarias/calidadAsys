@@ -1,9 +1,6 @@
-<div *ngIf="updated">
-  <h4>El item fue actualiz ado exitosamente</h4>
-</div>
-
 <form [formGroup]="addFormItem">
   <div class="items-container">
+    <h6>Editar Items</h6>
     <mat-form-field>
       <input matInput placeholder="nombre" [(ngModel)]="item.name" formControlName="name" name="name" id="name" required />
     </mat-form-field>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Person } from 'src/app/persons/shared/person';
 import { PersonService } from 'src/app/persons/shared/person.service';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Estado } from '../shared/estado';
 import { Rol } from '../shared/rol';
 import { RolService } from '../shared/rol.service';
@@ -11,7 +12,7 @@ import { UserService } from '../shared/user.service';
 @Component({
   selector: 'app-add-user',
   templateUrl: './add-user.component.html',
-  styleUrls: ['./add-user.component.scss']
+  styleUrls: ['./add-user.component.scss'],
 })
 export class AddUserComponent implements OnInit {
   rol: string;
@@ -19,11 +20,10 @@ export class AddUserComponent implements OnInit {
   estado: string;
   usuario: User;
   addForm: FormGroup;
-  submitted: boolean;
 
   estados: Estado[] = [
     { valor: '1', nombre: 'Activo' },
-    { valor: '0', nombre: 'Inactivo' }
+    { valor: '0', nombre: 'Inactivo' },
   ];
 
   roles: Rol[];
@@ -42,14 +42,14 @@ export class AddUserComponent implements OnInit {
       clave: [null, Validators.required],
       rol: [null, Validators.required],
       estado: [null, Validators.required],
-      person: [null, Validators.required]
+      person: [null, Validators.required],
     });
 
-    this.rolService.list().subscribe(data => {
+    this.rolService.list().subscribe((data) => {
       this.roles = data;
     });
 
-    this.personService.list('EMPLOYEE').subscribe(data => {
+    this.personService.list('EMPLOYEE').subscribe((data) => {
       this.persons = data;
     });
   }
@@ -63,9 +63,12 @@ export class AddUserComponent implements OnInit {
       registrationDate: '',
       hotelId: '',
       personId: this.addForm.get('person').value,
-      uuid: '1'
+      uuid: '1',
     };
     this.userService.add(cf);
-    this.submitted = true;
+    Swal.fire({
+      text: 'El usuario fue guardado con éxito!',
+      icon: 'success',
+    });
   }
 }
