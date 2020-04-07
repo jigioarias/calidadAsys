@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 import { User } from './user';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class UserService {
   constructor(private http: HttpClient) {}
@@ -20,11 +20,13 @@ export class UserService {
     );
   }
 
-  edit(usuario: User) {
+  edit(usuario: User): Observable<any> {
     const url = environment.apiUrl;
-    this.http.put<any>(`${url}user`, usuario).subscribe(
-      (data) => console.log('success', data),
-      (error) => console.log('oops', error)
+    return this.http.put<any>(`${url}item`, usuario).pipe(
+      switchMap((data) => of(data.content)),
+      catchError((error) => {
+        return '{error:' + error + '}';
+      })
     );
   }
 

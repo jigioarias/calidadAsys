@@ -1,54 +1,28 @@
-<form [formGroup]="addFormItem">
+<form [formGroup]="editFormItem">
   <div class="items-container">
     <h6>Editar Items</h6>
     <mat-form-field>
-      <input matInput placeholder="nombre" [(ngModel)]="item.name" formControlName="name" name="name" id="name" required />
+      <input matInput placeholder="nombre" formControlName="name" required />
     </mat-form-field>
 
     <mat-form-field>
-      <input
-        matInput
-        placeholder="descripcion"
-        [(ngModel)]="item.description"
-        formControlName="description"
-        name="description"
-        id="description"
-        required
-      />
+      <input matInput placeholder="descripcion" formControlName="description" required />
     </mat-form-field>
 
     <mat-form-field>
-      <input
-        matInput
-        type="number"
-        [(ngModel)]="item.quantity"
-        formControlName="quantity"
-        placeholder="cantidad"
-        name="quantity"
-        id="quantity"
-        required
-      />
+      <input matInput type="number" formControlName="quantity" placeholder="cantidad" required />
     </mat-form-field>
 
     <mat-form-field>
-      <input
-        matInput
-        [(ngModel)]="item.price"
-        type="number"
-        formControlName="price"
-        placeholder="precio"
-        name="price"
-        id="price"
-        required
-      />
+      <input matInput type="number" formControlName="price" placeholder="precio" required />
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput type="number" [(ngModel)]="item.stock" formControlName="stock" placeholder="stock" name="stock" id="stock" required />
+      <input matInput type="number" formControlName="stock" placeholder="stock" required />
     </mat-form-field>
 
     <mat-label>Estado:</mat-label>
-    <mat-radio-group name="active" id="active" formControlName="active" [(ngModel)]="item.active">
+    <mat-radio-group formControlName="active">
       <mat-radio-button value="true">Activo</mat-radio-button>
       <mat-radio-button value="false">Inactivo</mat-radio-button>
     </mat-radio-group>

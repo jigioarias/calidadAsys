@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 import { Item } from './item';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class ItemService {
   constructor(private http: HttpClient) {}
@@ -20,11 +20,13 @@ export class ItemService {
     );
   }
 
-  edit(item: Item) {
+  edit(item: Item): Observable<any> {
     const url = environment.apiUrl;
-    this.http.put<any>(`${url}item`, item).subscribe(
-      (data) => console.log('success', data),
-      (error) => console.log('oops', error)
+    return this.http.put<any>(`${url}item`, item).pipe(
+      switchMap((data) => of(data.content)),
+      catchError((error) => {
+        return '{error:' + error + '}';
+      })
     );
   }
 
@@ -34,6 +36,7 @@ export class ItemService {
       switchMap((data) => of(data.content)),
       catchError((e) => {
         console.log(e);
+
         return empty;
       })
     );
@@ -48,5 +51,18 @@ export class ItemService {
         return empty;
       })
     );
+  }
+
+  handleError(error): string {
+    let errorMessage = '';
+    if (error.error instanceof ErrorEvent) {
+      // client-side error
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.log(errorMessage);
+    return errorMessage;
   }
 }
