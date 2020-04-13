@@ -12,7 +12,7 @@ import { UserService } from '../shared/user.service';
 @Component({
   selector: 'app-add-user',
   templateUrl: './add-user.component.html',
-  styleUrls: ['./add-user.component.scss'],
+  styleUrls: ['./add-user.component.scss']
 })
 export class AddUserComponent implements OnInit {
   rol: string;
@@ -23,7 +23,7 @@ export class AddUserComponent implements OnInit {
 
   estados: Estado[] = [
     { valor: '1', nombre: 'Activo' },
-    { valor: '0', nombre: 'Inactivo' },
+    { valor: '0', nombre: 'Inactivo' }
   ];
 
   roles: Rol[];
@@ -42,7 +42,7 @@ export class AddUserComponent implements OnInit {
       clave: [null, Validators.required],
       rol: [null, Validators.required],
       estado: [null, Validators.required],
-      person: [null, Validators.required],
+      person: [null, Validators.required]
     });
 
     this.rolService.list().subscribe((data) => {
@@ -50,6 +50,7 @@ export class AddUserComponent implements OnInit {
     });
 
     this.personService.list('EMPLOYEE').subscribe((data) => {
+      console.log(data);
       this.persons = data;
     });
   }
@@ -63,12 +64,12 @@ export class AddUserComponent implements OnInit {
       registrationDate: '',
       hotelId: '',
       personId: this.addForm.get('person').value,
-      uuid: '1',
+      uuid: '1'
     };
     this.userService.add(cf);
     Swal.fire({
       text: 'El usuario fue guardado con éxito!',
-      icon: 'success',
+      icon: 'success'
     });
   }
 }

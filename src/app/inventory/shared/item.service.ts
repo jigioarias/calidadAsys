@@ -35,7 +35,7 @@ export class ItemService {
     return this.http.get<ResponseList<Item>>(`${url}item/`).pipe(
       switchMap((data) => of(data.content)),
       catchError((e) => {
-        console.log(e);
+        console.log('error item', e);
 
         return empty;
       })

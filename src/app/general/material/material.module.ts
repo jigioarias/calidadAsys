@@ -10,6 +10,7 @@ import {
   MatInputModule,
   MatListModule,
   MatNativeDateModule,
+  MatPaginatorModule,
   MatRadioModule,
   MatSelectModule,
   MatSidenavModule,
@@ -38,7 +39,8 @@ import {
     MatCardModule,
     MatAutocompleteModule,
     MatSlideToggleModule,
-    MatStepperModule
+    MatStepperModule,
+    MatPaginatorModule
   ],
   exports: [
     MatSidenavModule,
@@ -56,7 +58,8 @@ import {
     MatCardModule,
     MatAutocompleteModule,
     MatSlideToggleModule,
-    MatStepperModule
+    MatStepperModule,
+    MatPaginatorModule
   ]
 })
 export class MaterialModule {}

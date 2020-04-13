@@ -22,7 +22,8 @@ export class UserService {
 
   edit(usuario: User): Observable<any> {
     const url = environment.apiUrl;
-    return this.http.put<any>(`${url}item`, usuario).pipe(
+    console.log('usuario', usuario);
+    return this.http.put<any>(`${url}user`, usuario).pipe(
       switchMap((data) => of(data.content)),
       catchError((error) => {
         return '{error:' + error + '}';

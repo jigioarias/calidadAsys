@@ -11,7 +11,7 @@
     <mat-form-field>
       <mat-select formControlName="person" matInput placeholder="Empleados" required>
         <ng-container *ngFor="let person of persons">
-          <mat-option value="{{ person.uuid }}">{{ person.name }}</mat-option>
+          <mat-option value="{{ person.uuid }}">{{ person.firstName }}</mat-option>
         </ng-container>
       </mat-select>
     </mat-form-field>

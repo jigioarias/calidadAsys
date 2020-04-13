@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { empty, Observable, of } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
-import { ResponseList } from 'src/app/general/shared/response';
+import { Response, ResponseList } from 'src/app/general/shared/response';
 import { environment } from 'src/environments/environment';
 import { Person } from './person';
 
@@ -15,7 +15,7 @@ export class PersonService {
   list(type: string): Observable<Person[]> {
     let usuarios: Person[];
     const url = environment.apiUrl;
-    return this.http.get<ResponseList<Person>>(`${url}person?type=` + type).pipe(
+    return this.http.get<ResponseList<Person>>(`${url}person?personType=` + type).pipe(
       switchMap((data) => of(data.content)),
       catchError((e) => {
         console.log(e);
@@ -36,5 +36,16 @@ export class PersonService {
           return empty;
         })
       );
+  }
+
+  find(document: string): Observable<Person> {
+    const url = environment.apiUrl;
+    return this.http.get<Response<Person>>(`${url}person/` + document).pipe(
+      switchMap((data) => of(data.content)),
+      catchError((e) => {
+        console.log(e);
+        return empty;
+      })
+    );
   }
 }

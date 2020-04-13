@@ -47,7 +47,6 @@ export class EditUserComponent implements OnInit {
 
     this.userService.find(this.id).subscribe((data) => {
       this.usuario = data;
-      console.log('ggggg>>>>>>>>', this.usuario.user);
       this.addForm = this.formBuilder.group({
         clave: [this.usuario.password, Validators.required],
         usuario: [this.usuario.user, Validators.required],
@@ -64,7 +63,6 @@ export class EditUserComponent implements OnInit {
   onSave() {
     try {
       this.userService.edit(this.usuario).subscribe((data) => {
-        console.log('daattaaa:::' + data);
         if (this.instanceOfUser(data)) {
           this.usuario = data;
 

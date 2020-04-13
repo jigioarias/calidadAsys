@@ -12,13 +12,12 @@ const ELEMENT_DATA: User[] = [];
   styleUrls: ['./users-list.component.scss']
 })
 export class UsersListComponent implements OnInit {
-  displayedColumns: string[] = ['user', 'password', 'state', 'edit'];
+  displayedColumns: string[] = ['user', 'password', 'state', 'rol', 'edit'];
   dataSource = ELEMENT_DATA;
   constructor(private router: Router, private userService: UserService, private excelService: ExcelService) {}
 
   ngOnInit() {
-    this.userService.list().subscribe(data => {
-      console.log(data);
+    this.userService.list().subscribe((data) => {
       this.dataSource = data;
     });
   }
