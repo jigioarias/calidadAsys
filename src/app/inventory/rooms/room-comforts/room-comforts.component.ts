@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Comfort, COMFORTS } from '../../shared/comforts';
 
 @Component({
@@ -7,11 +7,23 @@ import { Comfort, COMFORTS } from '../../shared/comforts';
   styleUrls: ['./room-comforts.component.scss']
 })
 export class RoomComfortsComponent implements OnInit {
-  comforts: Comfort[];
+  comfortsToSelect: Comfort[];
+  comfortsSelected: string[] = [];
+
+  @Output()
+  comforts = new EventEmitter<string[]>();
 
   constructor() {}
 
   ngOnInit() {
-    this.comforts = COMFORTS;
+    this.comfortsToSelect = COMFORTS;
+  }
+
+  onSelect(comfort) {
+    this.comfortsSelected = this.comfortsSelected.filter((c) => c !== comfort.code);
+    if (comfort.selected) {
+      this.comfortsSelected.push(comfort.code);
+    }
+    this.comforts.emit(this.comfortsSelected);
   }
 }

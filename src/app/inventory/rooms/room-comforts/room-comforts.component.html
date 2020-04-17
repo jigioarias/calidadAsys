@@ -1,3 +1,4 @@
 <div>
-  <ho-room-comfort *ngFor="let comfort of comforts" [comfort]="comfort"></ho-room-comfort>
+  <ho-room-comfort *ngFor="let comfort of comfortsToSelect" [comfort]="comfort" (selected)="onSelect($event)">
+  </ho-room-comfort>
 </div>

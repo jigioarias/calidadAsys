@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material';
+import { MatStepper, MatTableDataSource } from '@angular/material';
 import { Observable } from 'rxjs';
 import { Item } from '../../shared/item';
 import { ItemService } from '../../shared/item.service';
-import { ItemInRoom, RoomState, RoomType } from '../../shared/room';
+import { ItemInRoom, Room, RoomState, RoomType } from '../../shared/room';
+import { RoomService } from '../../shared/room.service';
 
 @Component({
   selector: 'ho-room',
@@ -12,6 +13,8 @@ import { ItemInRoom, RoomState, RoomType } from '../../shared/room';
   styleUrls: ['./room.component.scss']
 })
 export class RoomComponent implements OnInit {
+  @ViewChild('stepper', null) stepper: MatStepper;
+
   roomForm: FormGroup;
   itemInRoomForm: FormGroup;
   items: Observable<Item[]>;
@@ -21,7 +24,9 @@ export class RoomComponent implements OnInit {
 
   types: RoomType[];
 
-  constructor(private formBuilder: FormBuilder, private itemService: ItemService) {}
+  private comforts: string[];
+
+  constructor(private formBuilder: FormBuilder, private itemService: ItemService, private roomService: RoomService) {}
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.itemsInRoom);
@@ -65,7 +70,30 @@ export class RoomComponent implements OnInit {
   }
 
   guardar() {
-    console.log('guardar');
+    if (!this.roomForm.valid) {
+      this.stepper.selectedIndex = 0;
+      return;
+    }
+
+    const room: Room = this.getInfoRoom();
+    this.roomService.add(room);
+  }
+
+  getInfoRoom(): Room {
+    const valuesRoom = this.roomForm.value;
+    return {
+      id: valuesRoom.id,
+      description: valuesRoom.description,
+      floor: valuesRoom.floor,
+      area: valuesRoom.area,
+      maximumPersons: valuesRoom.maxPersons,
+      numberBeds: valuesRoom.noBeds,
+      freeParking: valuesRoom.freeParking,
+      roomType_uuid: valuesRoom.roomType,
+      items: this.itemsInRoom,
+      comforts: this.comforts,
+      state: RoomState.DISPONIBLE
+    } as Room;
   }
 
   getItemDescription(item: Item) {
@@ -132,5 +160,9 @@ export class RoomComponent implements OnInit {
 
     this.dataSource.data = this.dataSource.data.filter((item) => item.item_uuid != itemInRoom.item_uuid);
     // this.dataSource.filter = '';
+  }
+
+  updateComforts(comforts: string[]) {
+    this.comforts = comforts;
   }
 }

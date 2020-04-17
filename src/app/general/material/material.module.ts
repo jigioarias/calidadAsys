@@ -5,6 +5,7 @@ import {
   MatButtonModule,
   MatCardModule,
   MatDatepickerModule,
+  MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
@@ -16,8 +17,10 @@ import {
   MatSlideToggleModule,
   MatStepperModule,
   MatTableModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatTooltipModule
 } from '@angular/material';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 @NgModule({
   declarations: [],
@@ -38,7 +41,10 @@ import {
     MatCardModule,
     MatAutocompleteModule,
     MatSlideToggleModule,
-    MatStepperModule
+    MatStepperModule,
+    NgxMaterialTimepickerModule,
+    MatTooltipModule,
+    MatDialogModule
   ],
   exports: [
     MatSidenavModule,
@@ -56,7 +62,10 @@ import {
     MatCardModule,
     MatAutocompleteModule,
     MatSlideToggleModule,
-    MatStepperModule
+    MatStepperModule,
+    NgxMaterialTimepickerModule,
+    MatTooltipModule,
+    MatDialogModule
   ]
 })
 export class MaterialModule {}

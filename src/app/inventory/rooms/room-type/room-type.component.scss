@@ -1,0 +1,26 @@
+mat-form-field {
+  margin-right: 1rem;
+}
+
+mat-card-content {
+  margin: 0;
+}
+
+mat-card-actions {
+  text-align: left;
+}
+
+h1 {
+  color: gray;
+  font-size: 1rem;
+}
+
+.custom-prices-header {
+  display: flex;
+  mat-icon {
+    color: #3f51b5;
+    cursor: pointer;
+    margin-top: -3px;
+    margin-left: 10px;
+  }
+}

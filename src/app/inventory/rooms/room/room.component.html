@@ -1,7 +1,7 @@
 <mat-card class="create-client-card">
   <div class="form-container">
     <form [formGroup]="roomForm">
-      <mat-horizontal-stepper class="xxx">
+      <mat-horizontal-stepper #stepper>
         <mat-step [stepControl]="roomForm">
           <form [formGroup]="roomForm">
             <ng-template matStepLabel>Información básica</ng-template>
@@ -12,7 +12,8 @@
                 </mat-form-field>
 
                 <mat-form-field id="type">
-                  <input matInput placeholder="Tipo de habitación" [matAutocomplete]="auto" formControlName="roomType" required />
+                  <input matInput placeholder="Tipo de habitación" [matAutocomplete]="auto" formControlName="roomType"
+                    required />
                   <mat-autocomplete #auto="matAutocomplete" [displayWith]="getRoomTypeDescription">
                     <mat-option *ngFor="let type of types" [value]="type">
                       <span>{{ type.description }}</span>
@@ -37,13 +38,8 @@
               </div>
 
               <mat-form-field id="description">
-                <textarea
-                  matInput
-                  cdkTextareaAutosize
-                  cdkAutosizeMinRows="2"
-                  cdkAutosizeMaxRows="5"
-                  placeholder="Descripción general"
-                ></textarea>
+                <textarea formControlName="description" matInput cdkTextareaAutosize cdkAutosizeMinRows="2"
+                  cdkAutosizeMaxRows="5" placeholder="Descripción general"></textarea>
               </mat-form-field>
               <div id="freeParking">
                 <mat-slide-toggle formControlName="freeParking">Parqueadero gratis</mat-slide-toggle>
@@ -59,7 +55,7 @@
         <mat-step optional>
           <ng-template matStepLabel>Comodidades</ng-template>
           <p>Selecciona las comodidades que posee o estan incluidas con esta habitación:</p>
-          <ho-room-comforts></ho-room-comforts>
+          <ho-room-comforts (comforts)="updateComforts($event)"></ho-room-comforts>
           <div class="button-container">
             <button matStepperPrevious mat-stroked-button color="primary">Información básica</button>
             <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
@@ -113,7 +109,7 @@
                   </ng-container>
                   <ng-container matColumnDef="requireCheck">
                     <th mat-header-cell *matHeaderCellDef>Revisión</th>
-                    <td mat-cell *matCellDef="let itemInRoom">{{ itemInRoom.requireCheck }}</td>
+                    <td mat-cell *matCellDef="let itemInRoom">{{ itemInRoom.requireCheck | yesNo}}</td>
                   </ng-container>
 
                   <ng-container matColumnDef="remove">

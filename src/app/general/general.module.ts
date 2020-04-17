@@ -16,8 +16,8 @@ import { AuthInterceptor } from './shared/auth-interceptor';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true,
-    },
-  ],
+      multi: true
+    }
+  ]
 })
 export class GeneralModule {}
