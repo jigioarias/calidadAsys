@@ -11,6 +11,7 @@ import {
   MatInputModule,
   MatListModule,
   MatNativeDateModule,
+  MatPaginatorModule,
   MatRadioModule,
   MatSelectModule,
   MatSidenavModule,
@@ -44,7 +45,8 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
     MatStepperModule,
     NgxMaterialTimepickerModule,
     MatTooltipModule,
-    MatDialogModule
+    MatDialogModule,
+    MatPaginatorModule
   ],
   exports: [
     MatSidenavModule,
@@ -65,7 +67,8 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
     MatStepperModule,
     NgxMaterialTimepickerModule,
     MatTooltipModule,
-    MatDialogModule
+    MatDialogModule,
+    MatPaginatorModule
   ]
 })
 export class MaterialModule {}

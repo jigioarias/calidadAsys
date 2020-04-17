@@ -4,18 +4,18 @@ import { empty, Observable, of } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { Response, ResponseList } from 'src/app/general/shared/response';
 import { environment } from 'src/environments/environment';
-import { Rol } from './rol';
+import { Country } from './country';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RolService {
+export class CountryService {
   constructor(private http: HttpClient) {}
 
-  list(): Observable<Rol[]> {
-    let roles: Rol[];
+  list(): Observable<Country[]> {
     const url = environment.apiUrl;
-    return this.http.get<ResponseList<Rol>>(`${url}role`).pipe(
+
+    return this.http.get<ResponseList<Country>>(`${url}country`).pipe(
       switchMap((data) => of(data.content)),
       catchError((e) => {
         console.log(e);
@@ -24,9 +24,9 @@ export class RolService {
     );
   }
 
-  find(id: string): Observable<Rol> {
+  find(): Observable<Country> {
     const url = environment.apiUrl;
-    return this.http.get<Response<Rol>>(`${url}role/` + id).pipe(
+    return this.http.get<Response<Country>>(`${url}country/`).pipe(
       switchMap((data) => of(data.content)),
       catchError((e) => {
         console.log(e);

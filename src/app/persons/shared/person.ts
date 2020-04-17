@@ -10,8 +10,6 @@ export interface Person {
   document: string;
   documentType: string;
   email: string;
-  employee: 0;
-  guest: 0;
   lastName: string;
   firstName: string;
   phone: string;

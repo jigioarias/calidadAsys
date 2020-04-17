@@ -1,5 +1,5 @@
 <div class="tabla">
-  <button mat-button routerLink="list" (click)="exportAsXLSX()">
+  <button mat-button (click)="exportAsXLSX()">
     <mat-icon aria-hidden="false" aria-label="Listar Usuarios">list</mat-icon>
   </button>
 
@@ -16,6 +16,12 @@
       <th mat-header-cell *matHeaderCellDef>Estado</th>
       <td mat-cell *matCellDef="let element">{{ element.state }}</td>
     </ng-container>
+
+    <ng-container matColumnDef="rol">
+      <th mat-header-cell *matHeaderCellDef>Rol</th>
+      <td mat-cell *matCellDef="let element">{{ element.rol }}</td>
+    </ng-container>
+
     <ng-container matColumnDef="edit">
       <th mat-header-cell *matHeaderCellDef>Editar</th>
       <td mat-cell *matCellDef="let element">
