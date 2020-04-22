@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { empty, Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
+import { messages } from 'src/app/general/messages';
 import { Response, ResponseList } from 'src/app/general/shared/response';
 import { environment } from 'src/environments/environment';
 import { Item } from './item';
@@ -12,32 +13,44 @@ import { Item } from './item';
 export class ItemService {
   constructor(private http: HttpClient) {}
 
-  add(item: Item) {
+  add(item: Item): Observable<Item> {
     const url = environment.apiUrl;
-    this.http.post<any>(`${url}item`, item).subscribe(
-      (data) => console.log('success', data),
-      (error) => console.log('oops', error)
+    return this.http.post<Response<Item>>(`${url}item`, item).pipe(
+      switchMap((data) => of(data.content)),
+      catchError((error) => {
+        if (error.status == 400) {
+          return throwError(error.error.message);
+        } else {
+          return throwError(messages.tecnicalError);
+        }
+      })
     );
   }
 
-  edit(item: Item): Observable<any> {
+  edit(item: Item): Observable<Item> {
     const url = environment.apiUrl;
-    return this.http.put<any>(`${url}item`, item).pipe(
+    return this.http.put<Response<Item>>(`${url}item`, item).pipe(
       switchMap((data) => of(data.content)),
       catchError((error) => {
-        return '{error:' + error + '}';
+        if (error.status == 400) {
+          return throwError(error.error.message);
+        } else {
+          return throwError(messages.tecnicalError);
+        }
       })
     );
   }
 
   list(): Observable<Item[]> {
     const url = environment.apiUrl;
-    return this.http.get<ResponseList<Item>>(`${url}item/`).pipe(
+    return this.http.get<ResponseList<Item>>(`${url}item`).pipe(
       switchMap((data) => of(data.content)),
-      catchError((e) => {
-        console.log('error item', e);
-
-        return empty;
+      catchError((error) => {
+        if (error.status == 400) {
+          return throwError(error.error.message);
+        } else {
+          return throwError(messages.tecnicalError);
+        }
       })
     );
   }
@@ -46,23 +59,13 @@ export class ItemService {
     const url = environment.apiUrl;
     return this.http.get<Response<Item>>(`${url}item/` + uuid).pipe(
       switchMap((data) => of(data.content)),
-      catchError((e) => {
-        console.log(e);
-        return empty;
+      catchError((error) => {
+        if (error.status == 400) {
+          return throwError(error.error.message);
+        } else {
+          return throwError(messages.tecnicalError);
+        }
       })
     );
-  }
-
-  handleError(error): string {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      // client-side error
-      errorMessage = `Error: ${error.error.message}`;
-    } else {
-      // server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-    console.log(errorMessage);
-    return errorMessage;
   }
 }

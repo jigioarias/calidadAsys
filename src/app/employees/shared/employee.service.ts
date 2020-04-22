@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { empty, Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
+import { messages } from 'src/app/general/messages';
 import { Response, ResponseList } from 'src/app/general/shared/response';
 import { environment } from 'src/environments/environment';
 import { Employee } from './employee';
@@ -12,16 +13,17 @@ import { Employee } from './employee';
 export class EmployeeService {
   constructor(private http: HttpClient) {}
 
-  save(employee: Employee) {
+  save(employee: Employee): Observable<Employee> {
     const url = environment.apiUrl;
-    console.log(employee);
-
-    this.http.post<any>(`${url}employee`, employee).subscribe(
-      (data) => {
-        console.log('success', data);
-        console.log('codigo', data.status);
-      },
-      (error) => console.log('oops', error)
+    return this.http.post<Response<Employee>>(`${url}employee`, employee).pipe(
+      switchMap((data) => of(data.content)),
+      catchError((error) => {
+        if (error.status == 400) {
+          return throwError(error.error.message);
+        } else {
+          return throwError(messages.tecnicalError);
+        }
+      })
     );
   }
 
@@ -30,9 +32,12 @@ export class EmployeeService {
 
     return this.http.get<ResponseList<Employee>>(`${url}employee`).pipe(
       switchMap((data) => of(data.content)),
-      catchError((e) => {
-        console.log(e);
-        return empty;
+      catchError((error) => {
+        if (error.status == 400) {
+          return throwError(error.error.message);
+        } else {
+          return throwError(messages.tecnicalError);
+        }
       })
     );
   }
@@ -41,9 +46,12 @@ export class EmployeeService {
     const url = environment.apiUrl;
     return this.http.get<Response<Employee>>(`${url}employee/` + id).pipe(
       switchMap((data) => of(data.content)),
-      catchError((e) => {
-        console.log(e);
-        return empty;
+      catchError((error) => {
+        if (error.status == 400) {
+          return throwError(error.error.message);
+        } else {
+          return throwError(messages.tecnicalError);
+        }
       })
     );
   }

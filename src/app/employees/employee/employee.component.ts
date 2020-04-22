@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DocumentType, DOCUMENT_TYPES } from 'src/app/clients/shared/document-type';
+import { messages } from 'src/app/general/messages';
 import { TypeContract, TYPE_CONTRACTS } from 'src/app/general/shared/contractType';
 import { Country } from 'src/app/general/shared/country';
 import { CountryService } from 'src/app/general/shared/country.service';
@@ -10,6 +11,7 @@ import { Person } from 'src/app/persons/shared/person';
 import { Rol } from 'src/app/users/shared/rol';
 import { RolService } from 'src/app/users/shared/rol.service';
 import { User } from 'src/app/users/shared/user';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { EmployeeHotel } from '../shared/empleadoHotel';
 import { Employee } from '../shared/employee';
 import { EmployeeHotelService } from '../shared/employeeHotel.service';
@@ -102,7 +104,6 @@ export class EmployeeComponent implements OnInit {
   }
 
   setUser(): User {
-    console.log('rollllll>>>>>>>>', this.userForm.get('rol').value);
     let userForm: User = {
       user: this.userForm.get('user').value,
       password: this.userForm.get('clave').value,
@@ -146,6 +147,21 @@ export class EmployeeComponent implements OnInit {
       person: this.setPerson()
     };
 
-    this.employeeHotelService.save(this.employedHotel);
+    this.employeeHotelService.save(this.employedHotel).subscribe(
+      (data) => {
+        Swal.fire({
+          text: messages.editUserError,
+          icon: messages.error,
+          width: messages.widthWindowMessage
+        });
+      },
+      (error) => {
+        Swal.fire({
+          text: messages.editUserError,
+          icon: messages.error,
+          width: messages.widthWindowMessage
+        });
+      }
+    );
   }
 }

@@ -27,8 +27,6 @@ export class UsersListComponent implements OnInit {
   }
 
   editar(id: string) {
-    console.log(`/edit/${id}`);
-    console.log(this.router.url);
     this.router.navigate([`/app/users/edit/${id}`]);
   }
 }

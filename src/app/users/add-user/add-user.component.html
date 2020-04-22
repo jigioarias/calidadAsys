@@ -1,34 +1,101 @@
-<form [formGroup]="addForm">
-  <div class="usuario-container">
-    <mat-form-field>
-      <input matInput placeholder="login" formControlName="user" name="user" id="user" required />
-    </mat-form-field>
+<mat-card class="create-client-card">
+  <div class="form-container">
+    <mat-horizontal-stepper class="xxx">
+      <mat-step [stepControl]="personForm">
+        <form [formGroup]="personForm">
+          <ng-template matStepLabel>Información básica</ng-template>
+          <div>
+            <mat-form-field>
+              <mat-select formControlName="documentType" matInput placeholder="Tipo documento" required>
+                <ng-container *ngFor="let documentType of documentTypes">
+                  <mat-option value="{{ documentType }}">{{ documentType.description }}</mat-option>
+                </ng-container>
+              </mat-select>
+            </mat-form-field>
 
-    <mat-form-field>
-      <input matInput formControlName="clave" placeholder="clave" name="clave" id="clave" type="password" required />
-    </mat-form-field>
+            <mat-form-field id="document">
+              <input formControlName="document" matInput placeholder="Documento" required />
+            </mat-form-field>
 
-    <mat-form-field>
-      <mat-select formControlName="person" matInput placeholder="Empleados" required>
-        <ng-container *ngFor="let person of persons">
-          <mat-option value="{{ person.uuid }}">{{ person.firstName }}</mat-option>
-        </ng-container>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-select formControlName="rol" matInput placeholder="Roles" required>
-        <ng-container *ngFor="let rol of roles">
-          <mat-option value="{{ rol.uuid }}">{{ rol.name }}</mat-option>
-        </ng-container>
-      </mat-select>
-    </mat-form-field>
+            <mat-form-field id="firstName">
+              <input formControlName="firstName" matInput placeholder="Nombre" required />
+            </mat-form-field>
 
-    <mat-label>Estado:</mat-label>
-    <mat-radio-group aria-label="Estado" name="estado" id="estado" formControlName="estado">
-      <mat-radio-button value="true">Activo</mat-radio-button>
-      <mat-radio-button value="false">Inactivo</mat-radio-button>
-    </mat-radio-group>
+            <mat-form-field id="lastName">
+              <input formControlName="lastName" matInput placeholder="Apellido" required />
+            </mat-form-field>
+            <mat-form-field>
+              <mat-select formControlName="country" matInput placeholder="Nacionalidad" required>
+                <ng-container *ngFor="let country of countries">
+                  <mat-option value="{{ country.uuid }}">{{ country.name }}</mat-option>
+                </ng-container>
+              </mat-select>
+            </mat-form-field>
 
-    <button mat-button (click)="onSubmit()">Ingresar</button>
+            <mat-form-field id="address">
+              <input formControlName="address" matInput placeholder="direccion" />
+            </mat-form-field>
+
+            <mat-form-field id="email">
+              <input formControlName="email" matInput placeholder="email" required />
+            </mat-form-field>
+
+            <mat-form-field id="phone">
+              <input formControlName="phone" matInput placeholder="télefono" />
+            </mat-form-field>
+
+            <mat-form-field id="cellphone">
+              <input formControlName="cellphone" matInput placeholder="celular" required />
+            </mat-form-field>
+
+            <mat-form-field id="birthdate">
+              <input matInput [matDatepicker]="birthdate" placeholder="Fecha  Nacimiento" [formControl]="birthdate" />
+              <mat-datepicker-toggle matSuffix [for]="birthdate"></mat-datepicker-toggle>
+              <mat-datepicker #birthdate></mat-datepicker>
+            </mat-form-field>
+
+            <div class="button-container">
+              <button mat-rai sed-button color="primary" (click)="guardar()">Guardar</button>
+              <button matStepperNext mat-stroked-button color="primary">Informacion Usuario</button>
+            </div>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="userForm">
+        <form [formGroup]="userForm">
+          <ng-template matStepLabel>Información Usuario</ng-template>
+          <div class="user-container">
+            <mat-card>
+              <mat-form-field>
+                <input matInput placeholder="login" formControlName="user" required />
+              </mat-form-field>
+
+              <mat-form-field>
+                <input matInput formControlName="clave" placeholder="clave" name="clave" id="clave" type="password" required />
+              </mat-form-field>
+              <mat-form-field>
+                <mat-select formControlName="rol" matInput placeholder="Roles" required>
+                  <ng-container *ngFor="let rol of roles">
+                    <mat-option value="{{ rol.name }}">{{ rol.name }}</mat-option>
+                  </ng-container>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-label>Estado:&nbsp;</mat-label>
+              <mat-radio-group aria-label="Estado" formControlName="state">
+                <ng-container *ngFor="let state of estados">
+                  <mat-radio-button value="{{ state.code }}">&nbsp;{{ state.description }}&nbsp;</mat-radio-button>
+                </ng-container>
+              </mat-radio-group>
+            </mat-card>
+          </div>
+          <div class="button-container">
+            <button matStepperPrevious mat-stroked-button color="primary">Información básica</button>
+            <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
+          </div>
+        </form>
+      </mat-step>
+    </mat-horizontal-stepper>
   </div>
-</form>
+</mat-card>

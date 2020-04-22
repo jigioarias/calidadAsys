@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { messages } from 'src/app/general/messages';
+import { State, STATES } from 'src/app/general/shared/state';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
-import { Estado } from '../shared/estado';
 import { Rol } from '../shared/rol';
 import { RolService } from '../shared/rol.service';
 import { User } from '../shared/user';
@@ -22,21 +22,28 @@ export class EditUserComponent implements OnInit {
   usuario: User;
   addForm: FormGroup;
 
-  estados: Estado[] = [
-    { valor: '1', nombre: 'Activo' },
-    { valor: '0', nombre: 'Inactivo' }
-  ];
+  estados: State[];
 
   roles: Rol[];
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private userService: UserService,
     private rolService: RolService
-  ) {}
+  ) {
+    this.addForm = this.formBuilder.group({
+      clave: [null, Validators.required],
+      usuario: [null, Validators.required],
+      rol: [null, Validators.required],
+      estado: [null, Validators.required]
+    });
+  }
 
   ngOnInit() {
+    this.estados = STATES;
+
     this.rolService.list().subscribe((data) => {
       this.roles = data;
     });
@@ -50,8 +57,8 @@ export class EditUserComponent implements OnInit {
       this.addForm = this.formBuilder.group({
         clave: [this.usuario.password, Validators.required],
         usuario: [this.usuario.user, Validators.required],
-        rol: [this.usuario.rol, Validators.required],
-        estado: [null, Validators.required]
+        rol: [this.usuario.rol],
+        estado: [this.usuario.state]
       });
     });
   }
@@ -83,5 +90,8 @@ export class EditUserComponent implements OnInit {
   }
   getUsuario() {
     return this.addForm.get('usuario');
+  }
+  cancel() {
+    this.router.navigate([`..users/list`]);
   }
 }

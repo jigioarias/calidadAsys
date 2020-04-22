@@ -55,8 +55,6 @@ export class ListEmployeesComponent implements OnInit {
   }
 
   editar(id: string) {
-    console.log(`/edit/${id}`);
-    console.log(this.router.url);
-    this.router.navigate([`/app/employee/edit/${id}`]);
+    this.router.navigate([`/app/employee/edit/` + id]);
   }
 }

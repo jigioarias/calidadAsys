@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { messages } from 'src/app/general/messages';
 import { Estado } from 'src/app/users/shared/estado';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Item } from '../../shared/item';
@@ -38,16 +39,28 @@ export class AddItemsComponent implements OnInit {
       stock: this.addFormItem.get('stock').value,
       description: this.addFormItem.get('description').value,
       quantity: this.addFormItem.get('quantity').value,
-      active: this.addFormItem.get('active').value,
+      state: this.addFormItem.get('active').value,
       name: this.addFormItem.get('name').value,
       hotelId: '',
       uuid: '0'
     };
     console.log(cf);
-    this.itemService.add(cf);
-    Swal.fire({
-      text: 'El item fue guardado con éxito!',
-      icon: 'success'
-    });
+
+    this.itemService.add(cf).subscribe(
+      (data) => {
+        Swal.fire({
+          text: messages.editItemSuccess,
+          icon: messages.success,
+          width: messages.widthWindowMessage
+        });
+      },
+      (err) => {
+        Swal.fire({
+          text: messages.editItemError + ' : ' + err,
+          icon: messages.error,
+          width: messages.widthWindowMessage
+        });
+      }
+    );
   }
 }

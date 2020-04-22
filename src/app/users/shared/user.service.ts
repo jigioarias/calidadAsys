@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { empty, Observable, of, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
+import { messages } from 'src/app/general/messages';
 import { Response, ResponseList } from 'src/app/general/shared/response';
 import { environment } from 'src/environments/environment';
 import { User } from './user';
@@ -12,21 +13,31 @@ import { User } from './user';
 export class UserService {
   constructor(private http: HttpClient) {}
 
-  add(usuario: User) {
+  add(person: User): Observable<User> {
     const url = environment.apiUrl;
-    this.http.post<any>(`${url}user`, usuario).subscribe(
-      (data) => console.log('success', data),
-      (error) => console.log('oops', error)
+    return this.http.post<Response<User>>(`${url}user`, person).pipe(
+      switchMap((data) => of(data.content)),
+      catchError((error) => {
+        if (error.status == 400) {
+          return throwError(error.error.message);
+        } else {
+          return throwError(messages.tecnicalError);
+        }
+      })
     );
   }
 
   edit(usuario: User): Observable<any> {
     const url = environment.apiUrl;
-    console.log('usuario', usuario);
+
     return this.http.put<any>(`${url}user`, usuario).pipe(
       switchMap((data) => of(data.content)),
       catchError((error) => {
-        return '{error:' + error + '}';
+        if (error.status == 400) {
+          return throwError(error.error.message);
+        } else {
+          return throwError(messages.tecnicalError);
+        }
       })
     );
   }
@@ -37,9 +48,12 @@ export class UserService {
 
     return this.http.get<ResponseList<User>>(`${url}user`).pipe(
       switchMap((data) => of(data.content)),
-      catchError((e) => {
-        console.log(e);
-        return empty;
+      catchError((error) => {
+        if (error.status == 400) {
+          return throwError(error.error.message);
+        } else {
+          return throwError(messages.tecnicalError);
+        }
       })
     );
   }
@@ -48,9 +62,12 @@ export class UserService {
     const url = environment.apiUrl;
     return this.http.get<Response<User>>(`${url}user/` + id).pipe(
       switchMap((data) => of(data.content)),
-      catchError((e) => {
-        console.log(e);
-        return empty;
+      catchError((error) => {
+        if (error.status == 400) {
+          return throwError(error.error.message);
+        } else {
+          return throwError(messages.tecnicalError);
+        }
       })
     );
   }

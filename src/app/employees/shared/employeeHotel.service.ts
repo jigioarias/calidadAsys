@@ -1,5 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
+import { Person } from 'src/app/clients/shared/client';
+import { messages } from 'src/app/general/messages';
+import { Response } from 'src/app/general/shared/response';
 import { environment } from 'src/environments/environment';
 import { EmployeeHotel } from './empleadoHotel';
 
@@ -9,16 +14,17 @@ import { EmployeeHotel } from './empleadoHotel';
 export class EmployeeHotelService {
   constructor(private http: HttpClient) {}
 
-  save(employeeHotel: EmployeeHotel) {
+  save(employeeHotel: EmployeeHotel): Observable<Person> {
     const url = environment.apiUrl;
-    console.log(employeeHotel);
-
-    this.http.post<any>(`${url}other/employee`, employeeHotel).subscribe(
-      (data) => {
-        console.log('success', data);
-        console.log('codigo', data.status);
-      },
-      (error) => console.log('oops', error)
+    return this.http.post<Response<Person>>(`${url}other/employee`, employeeHotel).pipe(
+      switchMap((data) => of(data.content)),
+      catchError((error) => {
+        if (error.status == 400) {
+          return throwError(error.error.message);
+        } else {
+          return throwError(messages.tecnicalError);
+        }
+      })
     );
   }
 }
