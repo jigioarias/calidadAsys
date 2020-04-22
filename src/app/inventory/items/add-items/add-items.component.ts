@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { messages } from 'src/app/general/messages';
-import { Estado } from 'src/app/users/shared/estado';
+import { State, STATES } from 'src/app/general/shared/state';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Item } from '../../shared/item';
 import { ItemService } from '../../shared/item.service';
@@ -15,14 +16,13 @@ export class AddItemsComponent implements OnInit {
   item: Item;
   submitted: boolean;
   addFormItem: FormGroup;
-  estados: Estado[] = [
-    { valor: '1', nombre: 'Activo' },
-    { valor: '0', nombre: 'Inactivo' }
-  ];
+  estados: State[];
 
-  constructor(private formBuilder: FormBuilder, private itemService: ItemService) {}
+  constructor(private router: Router, private formBuilder: FormBuilder, private itemService: ItemService) {}
 
   ngOnInit() {
+    this.estados = STATES;
+
     this.addFormItem = this.formBuilder.group({
       description: [null, Validators.required],
       quantity: [null, Validators.required],
@@ -51,8 +51,10 @@ export class AddItemsComponent implements OnInit {
         Swal.fire({
           text: messages.editItemSuccess,
           icon: messages.success,
-          width: messages.widthWindowMessage
+          width: messages.widthWindowMessage,
+          dismissOnDestroy: false
         });
+        this.router.navigate([`/app/items/list`]);
       },
       (err) => {
         Swal.fire({

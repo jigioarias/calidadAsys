@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { DocumentType, DOCUMENT_TYPES } from 'src/app/clients/shared/document-type';
 import { messages } from 'src/app/general/messages';
 import { TypeContract, TYPE_CONTRACTS } from 'src/app/general/shared/contractType';
@@ -35,6 +36,7 @@ export class EmployeeComponent implements OnInit {
   countries: Country[];
 
   constructor(
+    private router: Router,
     private formBuilder: FormBuilder,
     private rolService: RolService,
     private countryService: CountryService,
@@ -152,8 +154,10 @@ export class EmployeeComponent implements OnInit {
         Swal.fire({
           text: messages.editUserError,
           icon: messages.error,
-          width: messages.widthWindowMessage
+          width: messages.widthWindowMessage,
+          dismissOnDestroy: false
         });
+        this.router.navigate([`/app/employees/list`]);
       },
       (error) => {
         Swal.fire({

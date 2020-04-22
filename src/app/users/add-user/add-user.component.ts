@@ -157,7 +157,6 @@ export class AddUserComponent implements OnInit {
             (err) => {
               this.personService.delete(this.personaSave).subscribe(
                 (data) => {
-                  console.log('grabo>>>>', data);
                   Swal.fire({
                     text: messages.addUserError + err,
                     icon: messages.error

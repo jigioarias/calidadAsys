@@ -23,8 +23,9 @@
 
     <mat-label>Estado:</mat-label>
     <mat-radio-group name="active" id="active" formControlName="active">
-      <mat-radio-button value="true">Activo</mat-radio-button>
-      <mat-radio-button value="false">Inactivo</mat-radio-button>
+      <ng-container *ngFor="let state of estados">
+        <mat-radio-button value="{{ state.code }}">&nbsp;{{ state.description }}&nbsp;</mat-radio-button>
+      </ng-container>
     </mat-radio-group>
 
     <button mat-button (click)="onSubmit()">Ingresar</button>

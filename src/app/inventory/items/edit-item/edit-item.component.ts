@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { messages } from 'src/app/general/messages';
 import { State, STATES } from 'src/app/general/shared/state';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
@@ -19,10 +19,18 @@ export class EditItemComponent implements OnInit {
   editFormItem: FormGroup;
   estados: State[];
 
-  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private itemService: ItemService) {}
+  constructor(private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder, private itemService: ItemService) {}
 
   ngOnInit() {
     this.estados = STATES;
+    this.editFormItem = this.formBuilder.group({
+      description: [null, Validators.required],
+      quantity: [null, Validators.required],
+      stock: [0, Validators.required],
+      active: [null, Validators.required],
+      name: [null, Validators.required],
+      price: [0, Validators.required]
+    });
 
     this.route.params.subscribe((params) => {
       this.id = params['id'];
@@ -30,6 +38,7 @@ export class EditItemComponent implements OnInit {
 
     this.itemService.find(this.id).subscribe((data) => {
       this.item = data;
+      this.editFormItem.reset();
       this.editFormItem = this.formBuilder.group({
         description: [this.item.description, Validators.required],
         quantity: [this.item.quantity, Validators.required],
@@ -49,8 +58,10 @@ export class EditItemComponent implements OnInit {
         Swal.fire({
           text: messages.editItemSuccess,
           icon: messages.success,
-          width: messages.widthWindowMessage
+          width: messages.widthWindowMessage,
+          dismissOnDestroy: false
         });
+        this.router.navigate([`/app/items/list`]);
       },
       (error) => {
         Swal.fire({
