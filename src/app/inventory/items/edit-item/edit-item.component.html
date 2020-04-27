@@ -1,6 +1,6 @@
 <form [formGroup]="editFormItem">
   <div class="items-container">
-    <h6>Editar Itemss</h6>
+    <h6>Editar Items</h6>
     <mat-form-field>
       <input matInput placeholder="nombre" formControlName="name" required />
     </mat-form-field>
@@ -23,11 +23,11 @@
 
     <mat-label>Estado:</mat-label>
     <mat-radio-group formControlName="active">
-      <ng-container *ngFor="let state of estados">
-        <mat-radio-button value="{{ state.code }}">&nbsp;{{ state.description }}&nbsp;</mat-radio-button>
+      <ng-container>
+        <mat-radio-button *ngFor="let state of estados" [value]="state">&nbsp;{{ state.description }}&nbsp;</mat-radio-button>
       </ng-container>
     </mat-radio-group>
 
-    <button mat-button (click)="onSave()">Ingresar</button>
+    <button mat-button (click)="onSave()">Actualizar</button>
   </div>
 </form>

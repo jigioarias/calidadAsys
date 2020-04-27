@@ -53,7 +53,7 @@ export class EmployeeComponent implements OnInit {
       firstName: [null, Validators.required],
       lastName: [null, Validators.required],
       address: [null, Validators.required],
-      email: [null, Validators.required],
+      email: [null, Validators.email],
       phone: [null, Validators.required],
       cellphone: [null, Validators.required],
       birthdate: [null, Validators.required],
@@ -62,7 +62,7 @@ export class EmployeeComponent implements OnInit {
 
     this.employeeForm = this.formBuilder.group({
       salary: [null, Validators.required],
-      emailHotel: [null, Validators.required],
+      emailHotel: [null, Validators.email],
       state: [null, Validators.required],
       initDate: [null, Validators.required],
       endDate: [null, Validators.required],

@@ -44,7 +44,6 @@ export class AddItemsComponent implements OnInit {
       hotelId: '',
       uuid: '0'
     };
-    console.log(cf);
 
     this.itemService.add(cf).subscribe(
       (data) => {

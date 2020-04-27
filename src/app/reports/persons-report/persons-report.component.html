@@ -3,19 +3,19 @@
 <form [formGroup]="reportFilter">
   <div class="items-container">
     <mat-form-field>
-      <input matInput [matDatepicker]="initDate" [(ngModel)]="fechaInicial" placeholder="Fecha Inicial" [formControl]="date" />
+      <input matInput [matDatepicker]="initDate" placeholder="Fecha Inicial" formControlName="fechaInicial" />
       <mat-datepicker-toggle matSuffix [for]="initDate"></mat-datepicker-toggle>
       <mat-datepicker #initDate></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput [(ngModel)]="fechaFinal" [matDatepicker]="endDate" placeholder="Fecha Final" [formControl]="date" />
+      <input matInput [matDatepicker]="endDate" placeholder="Fecha Final" formControlName="fechaFinal" />
       <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
       <mat-datepicker #endDate></mat-datepicker>
     </mat-form-field>
 
     <mat-label>Estado:</mat-label>
-    <mat-radio-group name="nationality" id="nationality" formControlName="nationality" [(ngModel)]="nationality">
+    <mat-radio-group name="nationality" id="nationality" formControlName="nationality">
       <mat-radio-button value="ALL">Todos</mat-radio-button>
       <mat-radio-button value="OUTSIDE">Extranjeros</mat-radio-button>
       <mat-radio-button value="LOCAL">Locales</mat-radio-button>

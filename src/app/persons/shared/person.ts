@@ -1,6 +1,6 @@
 export interface Person {
-  address: string;
-  birthdate: string;
+  address?: string;
+  birthdate?: string;
   cellPhone: string;
   country: {
     code: string;
@@ -12,6 +12,6 @@ export interface Person {
   email: string;
   lastName: string;
   firstName: string;
-  phone: string;
+  phone?: string;
   uuid: string;
 }

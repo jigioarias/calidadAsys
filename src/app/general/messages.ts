@@ -10,9 +10,14 @@ export const messages = {
   // item crud
   editItemError: 'Error Actualizando el item',
   editItemSuccess: 'El item fue guardado exitosamente',
+  itemColumnName: ' Nombre item ',
+  itemColumnDescription: ' Descripción ',
+  itemColumnQuantity: ' Cantidad ',
+  itemColumnPrice: ' Precio ',
+
   //user crud
   editUserError: 'Error Actualizando el usuario',
-  editUserSuccess: 'El usuario fue guardado exitosamente',
+  editUserSuccess: 'El usuario fue actualizado exitosamente',
   addUserError: 'Error Guardando el usuario',
   addUserSuccess: 'El usuario fue guardado exitosamente',
 
@@ -33,5 +38,6 @@ export const messages = {
   deletePersonSuccess: 'El persona fue borrada exitosamente',
 
   //tecnical error
-  tecnicalError: 'Error tecnico, ingrese de nuevo o comuniquese con el administrador'
+  tecnicalError: 'Error tecnico, ingrese de nuevo o comuniquese con el administrador',
+  emptydDataForm: 'Alguno de los datos esta vacio o no tiene el formato '
 };

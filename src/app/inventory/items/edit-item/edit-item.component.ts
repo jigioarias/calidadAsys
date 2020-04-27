@@ -22,7 +22,6 @@ export class EditItemComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder, private itemService: ItemService) {}
 
   ngOnInit() {
-    this.estados = STATES;
     this.editFormItem = this.formBuilder.group({
       description: [null, Validators.required],
       quantity: [null, Validators.required],
@@ -39,37 +38,91 @@ export class EditItemComponent implements OnInit {
     this.itemService.find(this.id).subscribe((data) => {
       this.item = data;
       this.editFormItem.reset();
+      let indice = 0;
+      this.estados = STATES;
+      console.log(this.item.state);
+      for (let i = 0; i < this.estados.length; i++) {
+        if (Number(this.estados[i].code) == this.item.state) {
+          indice = i;
+        }
+      }
+      console.log(indice);
       this.editFormItem = this.formBuilder.group({
         description: [this.item.description, Validators.required],
-        quantity: [this.item.quantity, Validators.required],
+        quantity: [this.item.quantity],
         stock: [this.item.stock, Validators.required],
-        active: [this.item.state, Validators.required],
+        active: [this.estados[indice], Validators.required],
         name: [this.item.name, Validators.required],
         price: [this.item.price, Validators.required]
       });
     });
   }
 
-  onSave() {
-    this.itemService.edit(this.item).subscribe(
-      (data) => {
-        this.item = data;
+  seItem(): Item {
+    if (this.isValidateItem()) {
+      console.log(this.editFormItem.get('active').value.code);
+      let addForm: Item = {
+        state: Number(this.editFormItem.get('active').value.code),
+        description: this.editFormItem.get('description').value,
+        hotelId: this.item.hotelId,
+        price: this.editFormItem.get('price').value,
+        quantity: this.editFormItem.get('quantity').value,
+        stock: this.editFormItem.get('stock').value,
+        uuid: this.item.uuid,
+        name: this.editFormItem.get('name').value
+      };
+      return addForm;
+    } else {
+      return null;
+    }
+  }
 
-        Swal.fire({
-          text: messages.editItemSuccess,
-          icon: messages.success,
-          width: messages.widthWindowMessage,
-          dismissOnDestroy: false
-        });
-        this.router.navigate([`/app/items/list`]);
-      },
-      (error) => {
-        Swal.fire({
-          text: messages.editItemError + ' : ' + error,
-          icon: messages.error,
-          width: messages.widthWindowMessage
-        });
-      }
-    );
+  isValidateItem(): boolean {
+    if (
+      this.editFormItem.get('active').value == null ||
+      this.editFormItem.get('description').value == null ||
+      this.editFormItem.get('price').value == null ||
+      this.editFormItem.get('quantity').value == null ||
+      this.editFormItem.get('stock').value == null ||
+      this.editFormItem.get('name').value == null
+    ) {
+      return false;
+    }
+
+    return true;
+  }
+
+  onSave() {
+    let itemEdit = this.seItem();
+    if (itemEdit != null) {
+      console.log(itemEdit);
+
+      this.itemService.edit(itemEdit).subscribe(
+        (data) => {
+          this.item = data;
+
+          Swal.fire({
+            text: messages.editItemSuccess,
+            icon: messages.success,
+            width: messages.widthWindowMessage,
+            dismissOnDestroy: false
+          });
+          this.router.navigate([`/app/items/list`]);
+        },
+        (error) => {
+          Swal.fire({
+            text: messages.editItemError + ' : ' + error,
+            icon: messages.error,
+            width: messages.widthWindowMessage
+          });
+        }
+      );
+    } else {
+      Swal.fire({
+        text: messages.emptydDataForm,
+        icon: messages.error,
+        width: messages.widthWindowMessage
+      });
+    }
   }
 }

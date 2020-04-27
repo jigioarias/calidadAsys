@@ -1,11 +1,10 @@
-
 export interface User {
   rol: string;
-  state: boolean;
+  state: string;
   registrationDate: string;
-  hotelId: string,
-  password: string,
-  personId: string,
-  user: string,
-  uuid: string
+  hotelId: string;
+  password: string;
+  personId: string;
+  user: string;
+  uuid: string;
 }

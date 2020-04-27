@@ -1,15 +1,15 @@
 export interface State {
-  code: number;
+  code: string;
   description: string;
 }
 
 export const Activo: State = {
-  code: 1,
+  code: '1',
   description: 'Activo'
 };
 
 export const Inactivo: State = {
-  code: 0,
+  code: '0',
   description: 'Inactivo'
 };
 

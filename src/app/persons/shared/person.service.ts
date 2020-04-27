@@ -60,6 +60,35 @@ export class PersonService {
     );
   }
 
+  findDocument(typeDocument: string, document: string): Observable<Person[]> {
+    const url = environment.apiUrl;
+    console.log(`${url}person/` + typeDocument + '/' + document);
+    return this.http.get<ResponseList<Person>>(`${url}person/` + typeDocument + '/' + document).pipe(
+      switchMap((data) => of(data.content)),
+      catchError((error) => {
+        if (error.status == 400) {
+          return throwError(error.error.message);
+        } else {
+          return throwError(messages.tecnicalError);
+        }
+      })
+    );
+  }
+
+  findDocument2(typeDocument: string, document: string): Observable<Person[]> {
+    const url = environment.apiUrl;
+    return this.http.get<ResponseList<Person>>(`${url}person/` + typeDocument + '/' + document).pipe(
+      switchMap((data) => of(data.content)),
+      catchError((error) => {
+        if (error.status == 400) {
+          return throwError(error.error.message);
+        } else {
+          return throwError(messages.tecnicalError);
+        }
+      })
+    );
+  }
+
   add(person: Person): Observable<Person> {
     const url = environment.apiUrl;
     return this.http.post<Response<Person>>(`${url}person`, person).pipe(
@@ -80,7 +109,6 @@ export class PersonService {
     return this.http.delete<Response<Person>>(`${url}person/` + person.uuid).pipe(
       switchMap((data) => of(data.content)),
       catchError((error) => {
-        console.log('error::', error);
         if (error.status == 400) {
           return throwError(error.error.message);
         } else {

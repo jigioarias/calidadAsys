@@ -3,7 +3,7 @@ export interface DocumentType {
   description: string;
 }
 
-export const CC: DocumentType = {
+export const CEDULA: DocumentType = {
   code: 'CC',
   description: 'Cédula de ciudadanía'
 };
@@ -13,4 +13,23 @@ export const NIT: DocumentType = {
   description: 'NIT'
 };
 
-export const DOCUMENT_TYPES: DocumentType[] = [CC, NIT];
+export const PASAPORTE: DocumentType = {
+  code: 'PA',
+  description: 'Pasaporte'
+};
+
+export const TARJETA: DocumentType = {
+  code: 'TI',
+  description: 'Tarjeta de identidad'
+};
+export const NUIP: DocumentType = {
+  code: 'NU',
+  description: 'Número de Ident. Unico'
+};
+
+export const REGISTRO: DocumentType = {
+  code: 'RC',
+  description: 'Registro Civil'
+};
+
+export const DOCUMENT_TYPES: DocumentType[] = [CEDULA, NIT, PASAPORTE, NUIP, TARJETA, REGISTRO];

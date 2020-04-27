@@ -2,25 +2,24 @@
   <div class="usuario-container">
     <h6>Actualizar Usuario</h6>
     <mat-form-field>
-      <input matInput placeholder="login" formControlName="usuario" required />
+      <input matInput placeholder="login" formControlName="usuario" readonly />
     </mat-form-field>
-
     <mat-form-field>
       <input matInput formControlName="clave" placeholder="clave" type="password" required />
     </mat-form-field>
 
     <mat-form-field>
       <mat-select formControlName="rol" matInput placeholder="Roles" required>
-        <ng-container *ngFor="let rol of roles">
-          <mat-option value="{{ rol.uuid }}">{{ rol.name }}</mat-option>
+        <ng-container>
+          <mat-option #matOption="matOption" *ngFor="let rol of roles" [value]="rol">{{ rol.name }}</mat-option>
         </ng-container>
       </mat-select>
     </mat-form-field>
 
     <mat-label>Estado:</mat-label>
     <mat-radio-group matTooltip="Activar Usuario" aria-label="Estado" formControlName="estado">
-      <ng-container *ngFor="let state of estados">
-        <mat-radio-button value="{{ state.code }}">&nbsp;{{ state.description }}&nbsp;</mat-radio-button>
+      <ng-container>
+        <mat-radio-button *ngFor="let state of estados" [value]="state">&nbsp;{{ state.description }}&nbsp;</mat-radio-button>
       </ng-container>
     </mat-radio-group>
     <div>
