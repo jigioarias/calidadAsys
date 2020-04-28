@@ -3,13 +3,13 @@
 <form [formGroup]="reportFilter">
   <div class="items-container">
     <mat-form-field>
-      <input matInput [matDatepicker]="initDate" placeholder="Fecha Inicial" formControlName="fechaInicial" />
+      <input matInput [matDatepicker]="initDate" placeholder="Fecha Inicial" formControlName="initialDate" />
       <mat-datepicker-toggle matSuffix [for]="initDate"></mat-datepicker-toggle>
       <mat-datepicker #initDate></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput [matDatepicker]="endDate" placeholder="Fecha Final" formControlName="fechaFinal" />
+      <input matInput [matDatepicker]="endDate" placeholder="Fecha Final" formControlName="endDate" />
       <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
       <mat-datepicker #endDate></mat-datepicker>
     </mat-form-field>

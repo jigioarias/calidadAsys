@@ -48,9 +48,11 @@ export class PersonService {
 
   find(document: string): Observable<Person> {
     const url = environment.apiUrl;
+    console.log(`${url}person/` + document);
     return this.http.get<Response<Person>>(`${url}person/` + document).pipe(
       switchMap((data) => of(data.content)),
       catchError((error) => {
+        console.log(error);
         if (error.status == 400) {
           return throwError(error.error.message);
         } else {

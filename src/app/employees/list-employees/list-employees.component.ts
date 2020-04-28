@@ -36,16 +36,21 @@ export class ListEmployeesComponent implements OnInit {
       this.dataSource = ELEMENT_DATA_HOTEL;
       let contador = 0;
       this.dataSourceEmpleado.forEach((element) => {
-        this.personService.find(element.personId).subscribe((dataPersona) => {
-          this.empleadoHotel = {
-            person: dataPersona,
-            employee: element,
-            user: null
-          };
+        this.personService.find(element.personId).subscribe(
+          (dataPersona) => {
+            this.empleadoHotel = {
+              person: dataPersona,
+              employee: element,
+              user: null
+            };
 
-          this.dataSource[contador] = this.empleadoHotel;
-          contador++;
-        });
+            this.dataSource[contador] = this.empleadoHotel;
+            contador++;
+          },
+          (error) => {
+            console.log('error listando empleado con id:' + element.personId, error);
+          }
+        );
       });
     });
   }

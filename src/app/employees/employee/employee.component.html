@@ -6,15 +6,33 @@
           <ng-template matStepLabel>Información básica</ng-template>
           <div>
             <mat-form-field>
-              <mat-select formControlName="documentType" matInput placeholder="Tipo documento" required>
+              <mat-select
+                formControlName="documentType"
+                (selectionChange)="changeTypeDocument($event)"
+                matInput
+                placeholder="Tipo documento"
+                required
+              >
                 <ng-container *ngFor="let documentType of documentTypes">
-                  <mat-option value="{{ documentType }}">{{ documentType.description }}</mat-option>
+                  <mat-option [value]="documentType.code">{{ documentType.description }}</mat-option>
                 </ng-container>
               </mat-select>
             </mat-form-field>
 
-            <mat-form-field id="document">
-              <input formControlName="document" matInput placeholder="Documento" required />
+            <mat-form-field>
+              <input
+                formControlName="document"
+                matInput
+                placeholder="Documento Persona"
+                [matAutocomplete]="auto"
+                required
+                (onfocus)="changePerson()"
+              />
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let personita of filteredPersons" [value]="personita.document">
+                  {{ personita.document }}
+                </mat-option>
+              </mat-autocomplete>
             </mat-form-field>
 
             <mat-form-field id="firstName">
@@ -26,8 +44,8 @@
             </mat-form-field>
             <mat-form-field>
               <mat-select formControlName="country" matInput placeholder="Nacionalidad" required>
-                <ng-container *ngFor="let country of countries">
-                  <mat-option value="{{ country.uuid }}">{{ country.name }}</mat-option>
+                <ng-container>
+                  <mat-option *ngFor="let country of countries" [value]="country">{{ country.name }}</mat-option>
                 </ng-container>
               </mat-select>
             </mat-form-field>
@@ -49,7 +67,7 @@
             </mat-form-field>
 
             <mat-form-field id="birthdate">
-              <input matInput [matDatepicker]="birthdate" placeholder="Fecha Inicio de contrato" [formControl]="birthdate" />
+              <input matInput [matDatepicker]="birthdate" placeholder="Fecha de nacimimiento" [formControl]="birthdate" />
               <mat-datepicker-toggle matSuffix [for]="birthdate"></mat-datepicker-toggle>
               <mat-datepicker #birthdate></mat-datepicker>
             </mat-form-field>

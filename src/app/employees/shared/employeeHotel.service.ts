@@ -19,6 +19,7 @@ export class EmployeeHotelService {
     return this.http.post<Response<Person>>(`${url}other/employee`, employeeHotel).pipe(
       switchMap((data) => of(data.content)),
       catchError((error) => {
+        console.log('ops>>>', error);
         if (error.status == 400) {
           return throwError(error.error.message);
         } else {
