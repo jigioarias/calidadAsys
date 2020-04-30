@@ -24,3 +24,43 @@ h1 {
     margin-left: 10px;
   }
 }
+
+.mat-header-cell {
+  font-weight: bold;
+}
+
+.mat-header-row,
+.mat-row {
+  height: 32px;
+}
+
+.mat-row:hover {
+  background-color: #f7f7f7;
+}
+
+.mat-column-day {
+  width: 7rem;
+}
+
+.mat-column-priceDay,
+.mat-column-priceHour {
+  width: 6rem;
+  text-align: end;
+}
+
+.mat-column-startTime,
+.mat-column-endTime {
+  width: 5.5rem;
+  text-align: center;
+}
+
+.mat-column-holiday {
+  width: 4rem;
+  text-align: center;
+}
+
+.mat-column-remove {
+  width: 2rem;
+  position: relative;
+  text-align: center;
+}

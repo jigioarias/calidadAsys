@@ -10,21 +10,21 @@
         </mat-form-field>
         <mat-form-field>
           <span matPrefix>$&nbsp;</span>
-          <input formControlName="priceDay" matInput placeholder="Precio por día" required />
+          <input formControlName="priceDay" matInput placeholder="Precio por día" type="number" required />
         </mat-form-field>
         <mat-form-field>
           <span matPrefix>$&nbsp;</span>
-          <input formControlName="priceHour" matInput placeholder="Precio por hora" required />
+          <input formControlName="priceHour" matInput placeholder="Precio por hora" type="number" required />
         </mat-form-field>
       </form>
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button color="primary" (click)="save()">Guardar</button>
-      <button mat-stroked-button color="primary" (click)="showPriceDetail()">Agregar precio personalizado</button>
+
     </mat-card-actions>
   </div>
 
-  <ho-price-detail *ngIf="priceDetailVisible" (valueChange)="setPriceDetail($event)"></ho-price-detail>
+
 </mat-card>
 
 <mat-card>
@@ -36,6 +36,11 @@
   </div>
 
   <mat-card-content>
+    <button *ngIf="!priceDetailVisible" mat-stroked-button color="primary" (click)="showPriceDetail()">Agregar precio
+      personalizado</button>
+    <!-- <ho-price-details></ho-price-details> -->
+
+    <ho-price-detail *ngIf="priceDetailVisible" (valueChange)="setPriceDetail($event)"></ho-price-detail>
     <p class="noDataTable" *ngIf="!hasCustomPrices()">No se han definido precios personalizados para este tipo de
       habitación</p>
 
@@ -46,11 +51,12 @@
       </ng-container>
       <ng-container matColumnDef="priceDay">
         <th mat-header-cell *matHeaderCellDef>Precio día</th>
-        <td mat-cell *matCellDef="let priceDetail">{{ priceDetail.priceDay }}</td>
+        <td mat-cell *matCellDef="let priceDetail">{{ priceDetail.priceDay | currency:'USD':'symbol':'1.0-0' }}
+        </td>
       </ng-container>
       <ng-container matColumnDef="priceHour">
         <th mat-header-cell *matHeaderCellDef>Precio hora</th>
-        <td mat-cell *matCellDef="let priceDetail">{{ priceDetail.priceHour}}</td>
+        <td mat-cell *matCellDef="let priceDetail">{{ priceDetail.priceHour | currency:'USD':'symbol':'1.0-0'}}</td>
       </ng-container>
       <ng-container matColumnDef="startTime">
         <th mat-header-cell *matHeaderCellDef>Hora inicio</th>
@@ -66,8 +72,8 @@
       </ng-container>
       <ng-container matColumnDef="remove">
         <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let priceDetail">
-          <mat-icon (click)="removePriceDetail(priceDetail)">delete</mat-icon>
+        <td mat-cell *matCellDef="let i = index;" class="action-column-icon">
+          <mat-icon (click)="removePriceDetail(i)">delete</mat-icon>
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

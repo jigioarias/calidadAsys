@@ -1,4 +1,3 @@
-// @import '~bootstrap/scss/bootstrap.scss';
 mat-card {
   padding: 0.1rem 1rem;
 }
@@ -52,25 +51,6 @@ mat-card {
     }
   }
 
-  // .table-container {
-  //   max-height: 20rem;
-  //   overflow: auto;
-  //   width: 100%;
-  // }
-
-  .mat-header-cell {
-    font-weight: bold;
-  }
-
-  .mat-header-row,
-  .mat-row {
-    height: 32px;
-  }
-
-  .mat-row:hover {
-    background-color: #f7f7f7;
-  }
-
   table {
     width: 100%;
   }
@@ -83,20 +63,5 @@ mat-card {
   .mat-column-requireCheck {
     width: 15%;
     text-align: center;
-  }
-
-  .mat-column-remove {
-    width: 10%;
-    position: relative;
-    text-align: center;
-
-    mat-icon {
-      cursor: pointer;
-      position: absolute;
-      top: 4px;
-      &:hover {
-        color: #ff4081;
-      }
-    }
   }
 }

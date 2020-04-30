@@ -15,6 +15,8 @@ import { RoomTypeComponent } from './rooms/room-type/room-type.component';
 import { RoomComponent } from './rooms/room/room.component';
 import { RoomsListComponent } from './rooms/rooms-list/rooms-list.component';
 import { RoomsComponent } from './rooms/rooms/rooms.component';
+import { PriceDetailsComponent } from './rooms/price-details/price-details.component';
+import { RoomTypeListComponent } from './rooms/room-type-list/room-type-list.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { RoomsComponent } from './rooms/rooms/rooms.component';
     EditItemComponent,
     YesNoPipe,
     RoomTypeComponent,
-    PriceDetailComponent
+    PriceDetailComponent,
+    PriceDetailsComponent,
+    RoomTypeListComponent
   ],
   imports: [CommonModule, ReactiveFormsModule, MaterialModule, InventoryRoutingModule],
   entryComponents: [PriceDetailComponent]

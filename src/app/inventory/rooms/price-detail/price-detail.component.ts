@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { Messages } from 'src/app/general/messages';
+import { MessagesService } from 'src/app/general/shared/messages.service';
 import { PriceDetail } from '../../shared/room';
 
 @Component({
@@ -14,7 +15,7 @@ export class PriceDetailComponent implements OnInit {
 
   @Output() valueChange = new EventEmitter<PriceDetail>();
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private messagesService: MessagesService) {}
 
   ngOnInit() {
     this.priceDetailForm = this.formBuilder.group({
@@ -30,25 +31,16 @@ export class PriceDetailComponent implements OnInit {
   save() {
     const priceDetail: PriceDetail = this.priceDetailForm.value;
     if (this.validatePriceDetail(priceDetail)) {
+      this.emitPriceDetail(priceDetail);
     }
   }
 
   validatePriceDetail(priceDetail: PriceDetail): boolean {
     if (priceDetail.day === null || !this.hasPriceInfo(priceDetail)) {
-      const mensaje =
-        'Para definir un precio <b>personalizado</b>, debe definir por lo menos para que día aplicará y un precio por día u hora.';
-      this.showFailMessage(mensaje);
+      this.messagesService.showErrorMessage(Messages.get('priceDetail_info_incomplete'));
       return false;
     }
-    return false;
-  }
-  s;
-
-  showFailMessage(mensaje: string) {
-    Swal.fire({
-      html: mensaje,
-      icon: 'error'
-    });
+    return true;
   }
 
   hasHourInfo(priceDetail: PriceDetail): boolean {

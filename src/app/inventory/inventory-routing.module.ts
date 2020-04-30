@@ -4,6 +4,7 @@ import { AddItemsComponent } from './items/add-items/add-items.component';
 import { EditItemComponent } from './items/edit-item/edit-item.component';
 import { ItemsListComponent } from './items/items-list/items-list.component';
 import { ItemsComponent } from './items/items/items.component';
+import { RoomTypeListComponent } from './rooms/room-type-list/room-type-list.component';
 import { RoomTypeComponent } from './rooms/room-type/room-type.component';
 import { RoomComponent } from './rooms/room/room.component';
 import { RoomsListComponent } from './rooms/rooms-list/rooms-list.component';
@@ -21,6 +22,10 @@ const routes: Routes = [
       {
         path: 'type',
         component: RoomTypeComponent
+      },
+      {
+        path: 'typeList',
+        component: RoomTypeListComponent
       },
       {
         path: ':id',

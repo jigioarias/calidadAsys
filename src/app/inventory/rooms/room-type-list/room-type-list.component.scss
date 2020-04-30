@@ -1,0 +1,22 @@
+mat-card-content {
+  padding-top: 0.5rem;
+}
+
+.mat-column-description {
+  width: 20%;
+}
+
+.mat-column-priceDay,
+.mat-column-priceHour {
+  width: 15%;
+  text-align: end;
+}
+
+.mat-column-actions {
+  width: 10%;
+}
+
+.mat-column-priceDetails {
+  text-align: center;
+  width: 30%;
+}

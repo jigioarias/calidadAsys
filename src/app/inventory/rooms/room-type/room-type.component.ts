@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { MatTableDataSource } from '@angular/material/table';
+import { Messages } from 'src/app/general/messages';
+import { MessagesService } from 'src/app/general/shared/messages.service';
 import { PriceDetail, RoomType } from '../../shared/room';
 import { RoomService } from '../../shared/room.service';
 import { PriceDetailComponent } from '../price-detail/price-detail.component';
@@ -13,14 +15,24 @@ import { PriceDetailComponent } from '../price-detail/price-detail.component';
 })
 export class RoomTypeComponent implements OnInit {
   roomTypeForm: FormGroup;
+
+  priceDetails: PriceDetail[] = [];
   dataSource: MatTableDataSource<PriceDetail>;
+
   displayedColumns: string[] = ['day', 'priceDay', 'priceHour', 'startTime', 'endTime', 'holiday', 'remove'];
 
   priceDetailVisible = false;
 
-  constructor(private formBuilder: FormBuilder, public dialog: MatDialog, private roomService: RoomService) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    public dialog: MatDialog,
+    private roomService: RoomService,
+    private messagesService: MessagesService
+  ) {}
 
   ngOnInit() {
+    this.dataSource = new MatTableDataSource(this.priceDetails);
+
     this.roomTypeForm = this.formBuilder.group({
       uuid: [null],
       description: [null, Validators.required],
@@ -29,7 +41,10 @@ export class RoomTypeComponent implements OnInit {
     });
   }
 
-  removePriceDetail(priceDetail: PriceDetail) {}
+  removePriceDetail(index: number) {
+    this.dataSource.data.splice(index, 1);
+    this.dataSource.filter = '';
+  }
 
   openDialog(): void {
     console.log('open dialog');
@@ -53,7 +68,10 @@ export class RoomTypeComponent implements OnInit {
     }
 
     const roomType: RoomType = this.getInfoRoomType();
-    this.roomService.addType(roomType);
+    this.roomService.addType(roomType).subscribe(
+      () => this.messagesService.showSuccessMessage(Messages.get('priceDetail_save_success')),
+      (error) => this.messagesService.showErrorMessage(error.message)
+    );
   }
 
   getInfoRoomType(): RoomType {
@@ -72,6 +90,10 @@ export class RoomTypeComponent implements OnInit {
   }
 
   setPriceDetail(priceDetail: PriceDetail) {
+    if (priceDetail) {
+      this.dataSource.data.push(priceDetail);
+      this.dataSource.filter = '';
+    }
     this.priceDetailVisible = false;
   }
 
