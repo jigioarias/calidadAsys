@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Estado } from 'src/app/users/shared/estado';
+import { Router } from '@angular/router';
+import { messages } from 'src/app/general/messages';
+import { State, STATES } from 'src/app/general/shared/state';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Item } from '../../shared/item';
 import { ItemService } from '../../shared/item.service';
@@ -14,14 +16,13 @@ export class AddItemsComponent implements OnInit {
   item: Item;
   submitted: boolean;
   addFormItem: FormGroup;
-  estados: Estado[] = [
-    { valor: '1', nombre: 'Activo' },
-    { valor: '0', nombre: 'Inactivo' }
-  ];
+  estados: State[];
 
-  constructor(private formBuilder: FormBuilder, private itemService: ItemService) {}
+  constructor(private router: Router, private formBuilder: FormBuilder, private itemService: ItemService) {}
 
   ngOnInit() {
+    this.estados = STATES;
+
     this.addFormItem = this.formBuilder.group({
       description: [null, Validators.required],
       quantity: [null, Validators.required],
@@ -38,16 +39,29 @@ export class AddItemsComponent implements OnInit {
       stock: this.addFormItem.get('stock').value,
       description: this.addFormItem.get('description').value,
       quantity: this.addFormItem.get('quantity').value,
-      active: this.addFormItem.get('active').value,
+      state: this.addFormItem.get('active').value,
       name: this.addFormItem.get('name').value,
       hotelId: '',
       uuid: '0'
     };
-    console.log(cf);
-    this.itemService.add(cf);
-    Swal.fire({
-      text: 'El item fue guardado con éxito!',
-      icon: 'success'
-    });
+
+    this.itemService.add(cf).subscribe(
+      (data) => {
+        Swal.fire({
+          text: messages.editItemSuccess,
+          icon: messages.success,
+          width: messages.widthWindowMessage,
+          dismissOnDestroy: false
+        });
+        this.router.navigate([`/app/items/list`]);
+      },
+      (err) => {
+        Swal.fire({
+          text: messages.editItemError + ' : ' + err,
+          icon: messages.error,
+          width: messages.widthWindowMessage
+        });
+      }
+    );
   }
 }

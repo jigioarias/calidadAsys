@@ -1,15 +1,15 @@
 export interface State {
-  code: boolean;
+  code: string;
   description: string;
 }
 
 export const Activo: State = {
-  code: true,
+  code: '1',
   description: 'Activo'
 };
 
 export const Inactivo: State = {
-  code: false,
+  code: '0',
   description: 'Inactivo'
 };
 

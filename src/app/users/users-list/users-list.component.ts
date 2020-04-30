@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ExcelService } from 'src/app/general/reports/ExcelService';
+import { State, STATES } from 'src/app/general/shared/state';
 import { User } from '../shared/user';
 import { UserService } from '../shared/user.service';
 
@@ -12,13 +13,23 @@ const ELEMENT_DATA: User[] = [];
   styleUrls: ['./users-list.component.scss']
 })
 export class UsersListComponent implements OnInit {
-  displayedColumns: string[] = ['user', 'password', 'state', 'rol', 'edit'];
+  displayedColumns: string[] = ['user', 'state', 'rol', 'edit'];
   dataSource = ELEMENT_DATA;
+  listaUsuarios: User[];
+  estados: State[];
   constructor(private router: Router, private userService: UserService, private excelService: ExcelService) {}
 
   ngOnInit() {
     this.userService.list().subscribe((data) => {
       this.dataSource = data;
+      this.dataSource.forEach((element) => {
+        this.estados = STATES;
+        for (let i = 0; i < this.estados.length; i++) {
+          if (element.state == this.estados[i].code) {
+            element.state = this.estados[i].description;
+          }
+        }
+      });
     });
   }
 
@@ -27,8 +38,6 @@ export class UsersListComponent implements OnInit {
   }
 
   editar(id: string) {
-    console.log(`/edit/${id}`);
-    console.log(this.router.url);
     this.router.navigate([`/app/users/edit/${id}`]);
   }
 }

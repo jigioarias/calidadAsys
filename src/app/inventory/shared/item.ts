@@ -1,5 +1,5 @@
 export interface Item {
-  active: true;
+  state: number;
   description: string;
   hotelId: string;
   price: BigInteger;

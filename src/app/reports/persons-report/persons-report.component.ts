@@ -15,7 +15,7 @@ const ELEMENT_DATA: Person[] = [];
 @Component({
   selector: 'ho-persons-report',
   templateUrl: './persons-report.component.html',
-  styleUrls: ['./persons-report.component.scss'],
+  styleUrls: ['./persons-report.component.scss']
 })
 export class PersonsReportComponent implements OnInit {
   date = new FormControl(new Date());
@@ -44,17 +44,24 @@ export class PersonsReportComponent implements OnInit {
     this.reportFilter = this.formBuilder.group({
       endDate: [new Date(), Validators.required],
       initialDate: [new Date(), Validators.required],
-      nationality: [new Date(), Validators.required],
+      nationality: [new Date(), Validators.required]
     });
 
-    this.fechaFinal = Fecha.DateToYYYYMMDD(this.fechaFinal);
-    this.fechaInicial = Fecha.DateToYYYYMMDD(this.fechaInicial);
-    this.personService.listSale(this.nationality, this.fechaInicial, this.fechaFinal).subscribe((data) => {
-      this.dataSource = data;
-      if (this.dataSource.length > 0) {
-        this.showReport = true;
-      }
-    });
+    var date = new Date();
+    date.setDate(date.getDate() - 1);
+
+    this.fechaFinal = Fecha.DateToYYYYMMDD(new Date());
+    console.log('date:' + date);
+    this.fechaInicial = Fecha.DateToYYYYMMDD(date);
+    this.personService.listSale(this.nationality, this.fechaInicial, this.fechaFinal).subscribe(
+      (data) => {
+        this.dataSource = data;
+        if (this.dataSource.length > 0) {
+          this.showReport = true;
+        }
+      },
+      (error) => {}
+    );
   }
 
   onSubmit() {
@@ -62,14 +69,17 @@ export class PersonsReportComponent implements OnInit {
     this.fechaInicial = Fecha.DateToYYYYMMDD(this.fechaInicial);
 
     if (!isNull(this.fechaFinal && !isNull(this.fechaInicial))) {
-      this.personService.listSale(this.nationality, this.fechaInicial, this.fechaFinal).subscribe((data) => {
-        this.dataSource = data;
-        if (!isNull(this.dataSource) && this.dataSource.length > 0) {
-          this.showReport = true;
-        } else {
-          this.showReport = false;
-        }
-      });
+      this.personService.listSale(this.nationality, this.fechaInicial, this.fechaFinal).subscribe(
+        (data) => {
+          this.dataSource = data;
+          if (!isNull(this.dataSource) && this.dataSource.length > 0) {
+            this.showReport = true;
+          } else {
+            this.showReport = false;
+          }
+        },
+        (error) => {}
+      );
     }
   }
 
@@ -82,7 +92,7 @@ export class PersonsReportComponent implements OnInit {
           ReportService.convertPersonToMigration(this.dataSource, this.hotel),
           'clientes' + fechaExport,
           'personsReport'
-        ),
+        )
     ]);
   }
 }
