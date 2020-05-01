@@ -34,6 +34,10 @@ export class AddItemsComponent implements OnInit {
   }
 
   onSubmit() {
+    if (!this.addFormItem.valid) {
+      return;
+    }
+
     const cf: Item = {
       price: this.addFormItem.get('price').value,
       stock: this.addFormItem.get('stock').value,

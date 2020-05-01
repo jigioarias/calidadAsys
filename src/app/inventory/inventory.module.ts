@@ -8,15 +8,19 @@ import { AddItemsComponent } from './items/add-items/add-items.component';
 import { EditItemComponent } from './items/edit-item/edit-item.component';
 import { ItemsListComponent } from './items/items-list/items-list.component';
 import { ItemsComponent } from './items/items/items.component';
+import { AddParameterComponent } from './parameters/add-parameter/add-parameter.component';
+import { EditParameterComponent } from './parameters/edit-parameter/edit-parameter.component';
+import { ParameterListComponent } from './parameters/parameter-list/parameter-list.component';
+import { ParametersComponent } from './parameters/parameters.component';
 import { PriceDetailComponent } from './rooms/price-detail/price-detail.component';
+import { PriceDetailsComponent } from './rooms/price-details/price-details.component';
 import { RoomComfortComponent } from './rooms/room-comfort/room-comfort.component';
 import { RoomComfortsComponent } from './rooms/room-comforts/room-comforts.component';
+import { RoomTypeListComponent } from './rooms/room-type-list/room-type-list.component';
 import { RoomTypeComponent } from './rooms/room-type/room-type.component';
 import { RoomComponent } from './rooms/room/room.component';
 import { RoomsListComponent } from './rooms/rooms-list/rooms-list.component';
 import { RoomsComponent } from './rooms/rooms/rooms.component';
-import { PriceDetailsComponent } from './rooms/price-details/price-details.component';
-import { RoomTypeListComponent } from './rooms/room-type-list/room-type-list.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +33,10 @@ import { RoomTypeListComponent } from './rooms/room-type-list/room-type-list.com
     AddItemsComponent,
     ItemsListComponent,
     EditItemComponent,
+    ParametersComponent,
+    EditParameterComponent,
+    AddParameterComponent,
+    ParameterListComponent,
     YesNoPipe,
     RoomTypeComponent,
     PriceDetailComponent,
