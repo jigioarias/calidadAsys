@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { EditHotelComponent } from './hotels/edit-hotel/edit-hotel.component';
+import { HotelComponent } from './hotels/hotel/hotel.component';
+import { HotelsComponent } from './hotels/hotels.component';
 import { AddItemsComponent } from './items/add-items/add-items.component';
 import { EditItemComponent } from './items/edit-item/edit-item.component';
 import { ItemsListComponent } from './items/items-list/items-list.component';
@@ -56,6 +59,22 @@ const routes: Routes = [
       },
 
       { path: '', redirectTo: 'list', pathMatch: 'full' }
+    ]
+  },
+  {
+    path: 'hotels',
+    component: HotelsComponent,
+    children: [
+      {
+        path: 'edit',
+        component: EditHotelComponent
+      },
+      {
+        path: 'show',
+        component: HotelComponent
+      },
+
+      { path: '', redirectTo: 'show', pathMatch: 'full' }
     ]
   },
   {

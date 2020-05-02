@@ -76,7 +76,8 @@ export class UserService {
 
   changePassword(changePassword: ChangePassword): Observable<string> {
     const url = environment.apiUrl;
-    return this.http.post<Response<User>>(`${url}user`, changePassword).pipe(
+
+    return this.http.put<Response<User>>(`${url}user/` + changePassword.password + '/' + changePassword.newPassword, null).pipe(
       switchMap((data) => of(data.message)),
       catchError((error) => {
         if (error.status == 400) {

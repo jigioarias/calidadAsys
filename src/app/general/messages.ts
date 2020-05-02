@@ -53,9 +53,12 @@ export class Messages {
     edit_confirm: '¿Estás seguro de actualizar el %0?',
     edit_success: 'El %0 fue actualizado exitosamente',
     edit_error: 'Error al actualizar el %0  %1',
+    retrieve_error: ' Error al consultar los datos de %0',
 
     setEmailtoLogin: '¿Desea colocar el email %0 como usuario?',
     dataFormError: ' Falta diligenciar uno de los datos para %0 ',
+
+    confirm_logout: 'Desea salir del sistema?',
 
     priceDetail_info_incomplete:
       'Para definir un precio <b>personalizado</b>, debe definir por lo menos para que día aplicará y un precio por día u hora.',
