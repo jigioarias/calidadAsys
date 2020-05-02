@@ -26,7 +26,8 @@ export class HomeComponent implements OnInit {
           },
           (error) => {
             console.log('error al cerrar sesion', error);
-            console.log('error al cerrar sesion', error);
+            localStorage.clear();
+            this.route.navigate([`/login`]);
           }
         );
       }
